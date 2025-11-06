@@ -1,9 +1,48 @@
-# About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+# 关于本站
 
-::github{repo="saicaca/fuwari"}
+## 📝 博客简介
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+欢迎来到我的个人技术博客！这是一个分享技术洞见、学习心得和编程实践的平台。我致力于通过简洁明了的方式，记录技术探索的点滴，也希望能够帮助到同样在技术道路上前行的你。
+
+## 👨‍💻 关于我
+
+我是一名热爱编程和技术探索的开发者，对前端技术、人工智能和大模型应用有着浓厚的兴趣。在这个博客中，我将分享我的学习笔记、项目经验和对技术趋势的理解。
+
+## 📚 博客内容
+
+本博客主要包含以下几个方面的内容：
+
+- **前端开发**：React、Vue、TypeScript、CSS等前端技术的实践与探索
+- **大模型应用**：LLM应用开发、prompt工程、AI辅助开发等
+- **工具与技巧**：开发工具配置、效率提升、工作流优化
+- **学习笔记**：新技术学习心得、教程分享
+- **项目实战**：从创意到实现的完整项目案例
+
+## 🔧 技术栈
+
+博客使用现代化的开发技术构建：
+
+- **前端框架**：Astro
+- **UI组件**：Svelte、Tailwind CSS
+- **内容管理**：Markdown
+- **部署平台**：Vercel
+
+## 📱 联系方式
+
+如果你有任何问题、建议或合作意向，欢迎通过以下方式联系我：
+
+- **GitHub**：[happyzhuang](https://github.com/happyzhuang)
+- **邮箱**：[626783@gmail.com](mailto:626783@gmail.com)
+
+## 💡 博客愿景
+
+希望通过这个博客，能够：
+
+1. 记录个人技术成长历程
+2. 分享有价值的技术内容
+3. 结识更多志同道合的开发者
+4. 为技术社区贡献自己的一份力量
+
+感谢你的访问和支持！
+
+::github{repo="happyzhuang/happyzhuang.github.io"}
