@@ -53,7 +53,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/demo-avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	avatar: "assets/images/touxiang.jpeg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Happy Zhuang",
 	bio: "探索AI的奇妙世界，记录技术成长的点滴历程",
 	links: [
