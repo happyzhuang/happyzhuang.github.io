@@ -1,9 +1,9 @@
 ---
 title: 大模型系列——解读RAG
-published: 2024-01-20
+published: 2025-11-01
 description: 深入解析检索增强生成(Retrieval-Augmented Generation)技术的原理、应用和实现方法。
 tags: [大模型, RAG, AI, 检索增强生成]
-category: 技术
+category: RAG
 lang: zh_CN
 draft: false
 ---
