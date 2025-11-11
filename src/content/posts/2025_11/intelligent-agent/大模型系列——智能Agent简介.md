@@ -6,6 +6,7 @@ tags: [大模型, Agent, AI, 智能代理]
 category: Agent
 lang: zh_CN
 draft: false
+image: ./agent-cover.svg
 ---
 
 # 大模型系列——智能Agent简介
