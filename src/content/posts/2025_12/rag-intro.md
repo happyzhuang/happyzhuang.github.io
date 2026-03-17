@@ -1,11 +1,13 @@
 ---
 title: 大模型系列——RAG 入门与技术演进
 published: 2025-12-03
-description: 系统梳理检索增强生成（RAG）的核心定义、原理、演进与选型策略。
+description: 系统梳理检索增强生成（RAG）的核心定义、原理、演进与选型策略，从入门到精通的完整指南。
 tags: [大模型, RAG, AI, 检索增强生成]
 category: RAG
 lang: zh_CN
 draft: false
+image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop
+series: 大模型技术探索
 ---
 
 # 大模型系列——RAG 入门与技术演进
