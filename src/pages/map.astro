@@ -2,45 +2,280 @@
 import { Icon } from "astro-icon/components";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 
-const tracks = [
-	["LLM 基础", "理解模型能力边界、上下文窗口、token、温度参数和常见误区。"],
-	["Prompt Engineering", "从任务描述、角色、约束、示例到结构化输出，形成可复用模板。"],
-	["Embedding 与 RAG", "理解向量化、切块、召回、重排和答案生成，不把 RAG 简化成向量库。"],
-	["Tool Use / Function Calling", "让模型调用外部工具，处理真实世界任务和结构化动作。"],
-	["Agent 工程", "任务规划、记忆、反思、工具调用和可观测性。"],
-	["评测与成本", "建立评测集、观察失败案例，并控制延迟、成本和上下文占用。"],
+const roadmap = [
+	{
+		phase: "01",
+		title: "AI 大模型入门",
+		summary: "先建立对 LLM 的整体认知，知道它能做什么、不能做什么，以及如何正确使用模型工具。",
+		outcome: "能独立使用主流大模型完成问答、写作、资料整理和基础代码辅助。",
+		accent: "oklch(0.72 0.14 205)",
+		modules: [
+			{
+				title: "大模型基础认知",
+				items: ["LLM 与生成式 AI", "模型、参数与上下文窗口", "token 与成本", "闭源模型与开源模型"],
+			},
+			{
+				title: "工具与环境",
+				items: ["ChatGPT / Claude / Gemini", "Ollama 本地模型", "API Key 与调用额度", "隐私与安全边界"],
+			},
+			{
+				title: "Prompt 基础",
+				items: ["任务与角色", "背景与约束", "结构化输出", "few-shot 示例"],
+			},
+		],
+	},
+	{
+		phase: "02",
+		title: "Python 与数据基础",
+		summary: "补齐大模型应用开发所需的工程底座，能够读取数据、调用 API、处理文本并组织项目。",
+		outcome: "能写出一个最小可运行的 AI 应用脚本，并处理常见文本和数据输入。",
+		accent: "oklch(0.74 0.14 145)",
+		modules: [
+			{
+				title: "Python 工程基础",
+				items: ["函数与模块", "异常处理", "文件读写", "虚拟环境与依赖"],
+			},
+			{
+				title: "数据处理",
+				items: ["Numpy 向量计算", "Pandas 清洗", "JSON / YAML", "文本预处理"],
+			},
+			{
+				title: "项目能力",
+				items: ["HTTP API 调用", "环境变量", "日志与重试", "Git 与命令行"],
+			},
+		],
+	},
+	{
+		phase: "03",
+		title: "机器学习与深度学习",
+		summary: "理解模型训练和表示学习的基本思想，不追求从零造大模型，但要理解背后的关键概念。",
+		outcome: "能看懂模型训练、Embedding、相似度检索和常见评估指标的含义。",
+		accent: "oklch(0.76 0.15 85)",
+		modules: [
+			{
+				title: "机器学习核心",
+				items: ["训练 / 验证 / 测试", "分类与回归", "过拟合与泛化", "准确率、召回率、F1"],
+			},
+			{
+				title: "深度学习基础",
+				items: ["神经网络", "损失函数", "梯度下降", "PyTorch 训练流程"],
+			},
+			{
+				title: "Embedding 思维",
+				items: ["向量空间", "余弦相似度", "文本向量化", "语义检索"],
+			},
+		],
+	},
+	{
+		phase: "04",
+		title: "NLP 与 Transformer",
+		summary: "从传统 NLP 过渡到 Transformer，理解现代大模型为何能处理语言、上下文和复杂任务。",
+		outcome: "能解释 Attention、Transformer、BERT/GPT 差异，以及预训练和微调的边界。",
+		accent: "oklch(0.72 0.15 270)",
+		modules: [
+			{
+				title: "NLP 基础",
+				items: ["分词与实体识别", "文本分类", "文本匹配", "语义相似度"],
+			},
+			{
+				title: "Transformer 原理",
+				items: ["Self-Attention", "位置编码", "Encoder / Decoder", "BERT 与 GPT"],
+			},
+			{
+				title: "预训练与微调",
+				items: ["SFT 指令微调", "LoRA / QLoRA", "数据格式", "微调适用边界"],
+			},
+		],
+	},
+	{
+		phase: "05",
+		title: "大模型应用核心",
+		summary: "进入真正的应用开发：API、多轮对话、结构化输出、RAG、工具调用和 Agent 工作流。",
+		outcome: "能构建可运行的大模型应用，并能解释 RAG 和 Agent 的核心链路。",
+		accent: "oklch(0.72 0.16 35)",
+		modules: [
+			{
+				title: "LLM API 开发",
+				items: ["消息结构", "流式输出", "JSON Schema", "多轮对话状态"],
+			},
+			{
+				title: "RAG 知识库",
+				items: ["文档切块", "向量库", "召回与重排", "引用与可追溯"],
+			},
+			{
+				title: "Agent 与工具调用",
+				items: ["Function Calling", "任务规划", "工具执行", "失败恢复"],
+			},
+		],
+	},
+	{
+		phase: "06",
+		title: "评测、部署与产品化",
+		summary: "让 Demo 变得可靠：建立评测、控制成本、处理异常、部署 API，并关注真实用户体验。",
+		outcome: "能把一个 AI 应用部署上线，并持续观察质量、成本和失败案例。",
+		accent: "oklch(0.70 0.15 180)",
+		modules: [
+			{
+				title: "评测体系",
+				items: ["评测集", "人工评审", "自动评估", "失败案例分析"],
+			},
+			{
+				title: "部署与稳定性",
+				items: ["Serverless API", "限流与缓存", "日志监控", "安全边界"],
+			},
+			{
+				title: "产品化项目",
+				items: ["知识库助手", "文档问答", "代码审查助手", "内部工具原型"],
+			},
+		],
+	},
+	{
+		phase: "07",
+		title: "多模态与进阶专题",
+		summary: "把能力扩展到图片、语音、截图、图表和复杂工作流，探索更接近真实产品的 AI 系统。",
+		outcome: "能设计跨文本、图片、语音和工具链的组合式 AI 工作流。",
+		accent: "oklch(0.72 0.14 315)",
+		modules: [
+			{
+				title: "多模态基础",
+				items: ["图像理解", "OCR 与截图分析", "语音输入输出", "图表理解"],
+			},
+			{
+				title: "生成式内容",
+				items: ["图片生成", "图片编辑", "参考图控制", "网站视觉资产"],
+			},
+			{
+				title: "进阶系统",
+				items: ["上下文工程", "MCP 工具体系", "多 Agent 协作", "从 Demo 到产品"],
+			},
+		],
+	},
 ];
 ---
 
 <MainGridLayout title="学习地图">
-	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
-		<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">LLM 学习地图</h1>
-		<p class="text-75 text-lg leading-8 max-w-3xl">
-			这张地图用来组织后续文章和实验：先建立概念，再进入工程实践，最后沉淀成可复用的方法和项目。
-		</p>
-	</section>
-
-	<section class="card-base px-4 md:px-6 py-4 mb-4 onload-animation">
-		{tracks.map(([title, description], index) => (
-			<div class="flex gap-4 px-2 py-5 border-b border-dashed border-black/10 dark:border-white/[0.15] last:border-b-0">
-				<div class="shrink-0 w-10 h-10 rounded-xl bg-[var(--btn-regular-bg)] text-[var(--primary)] flex items-center justify-center font-bold">
-					{index + 1}
-				</div>
-				<div>
-					<h2 class="text-xl font-bold text-90 mb-1">{title}</h2>
-					<p class="text-75 leading-7">{description}</p>
-				</div>
+	<section class="card-base overflow-hidden mb-4 onload-animation">
+		<div class="relative px-6 py-8 md:px-10 md:py-10">
+			<div class="absolute inset-0 pointer-events-none opacity-70">
+				<div class="absolute right-8 top-6 h-40 w-40 rounded-full bg-[oklch(0.74_0.14_205)] blur-3xl opacity-20"></div>
+				<div class="absolute left-10 bottom-4 h-32 w-32 rounded-full bg-[oklch(0.76_0.14_35)] blur-3xl opacity-15"></div>
 			</div>
-		))}
+			<div class="relative max-w-4xl">
+				<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">LLM 学习地图</h1>
+				<p class="text-75 text-lg leading-8">
+					这不是一张静态课程表，而是一条会持续生长的学习路线。每个节点未来都可以扩展成教程、实验、文章或项目日志。
+				</p>
+			</div>
+		</div>
 	</section>
 
-	<section class="card-base px-6 py-6 md:px-9 mb-4 onload-animation">
-		<div class="flex items-center gap-3 mb-3">
-			<Icon name="material-symbols:flag-outline-rounded" class="text-[var(--primary)] text-3xl" />
-			<h2 class="text-2xl font-bold text-90">下一步</h2>
+	<section class="card-base px-4 py-6 md:px-8 md:py-8 mb-4 onload-animation">
+		<div class="relative learning-road">
+			<svg class="absolute left-5 top-6 h-[calc(100%-3rem)] w-20 md:left-1/2 md:-translate-x-1/2 md:w-28 pointer-events-none" viewBox="0 0 120 1200" preserveAspectRatio="none" aria-hidden="true">
+				<path d="M60 0 C 10 110, 110 210, 60 320 S 10 530, 60 650 S 110 860, 60 980 S 10 1120, 60 1200" fill="none" stroke="var(--line-color)" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 14" />
+				<path d="M60 0 C 10 110, 110 210, 60 320 S 10 530, 60 650 S 110 860, 60 980 S 10 1120, 60 1200" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" opacity="0.65" />
+			</svg>
+
+			<div class="space-y-8 md:space-y-12">
+				{roadmap.map((stage, index) => {
+					const isRight = index % 2 === 1;
+					return (
+						<article class:list={[
+							"relative grid grid-cols-[3.5rem_1fr] gap-4 md:grid-cols-[1fr_5rem_1fr] md:gap-6 items-start",
+						]}>
+							<div class:list={[
+								"hidden md:block",
+								isRight ? "md:col-start-1" : "md:col-start-3",
+							]}>
+								<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-5 py-5 border border-black/5 dark:border-white/10">
+									<div class="text-sm text-50 mb-2">阶段成果</div>
+									<p class="text-75 leading-7">{stage.outcome}</p>
+								</div>
+							</div>
+
+							<div class="relative col-start-1 md:col-start-2 flex justify-center">
+								<div class="sticky top-24 z-10 h-14 w-14 rounded-2xl flex items-center justify-center text-white shadow-lg" style={`background: ${stage.accent}`}>
+									<span class="font-bold text-lg">{stage.phase}</span>
+								</div>
+							</div>
+
+							<div class:list={[
+								"col-start-2 md:col-start-auto",
+								isRight ? "md:col-start-3" : "md:col-start-1 md:row-start-1",
+							]}>
+								<div class="rounded-[1.25rem] bg-[var(--btn-regular-bg)] overflow-hidden border border-black/5 dark:border-white/10">
+									<div class="px-5 py-5 md:px-6 md:py-6" style={`border-top: 4px solid ${stage.accent}`}>
+										<div class="flex items-center justify-between gap-3 mb-3">
+											<div class="text-sm font-bold" style={`color: ${stage.accent}`}>阶段 {stage.phase}</div>
+											<div class="text-xs rounded-lg bg-[var(--card-bg)] px-2.5 py-1 text-50">路线节点</div>
+										</div>
+										<h2 class="text-2xl font-bold text-90 mb-3">{stage.title}</h2>
+										<p class="text-75 leading-7">{stage.summary}</p>
+									</div>
+
+									<div class="grid grid-cols-1 lg:grid-cols-3 gap-3 px-4 pb-4 md:px-5 md:pb-5">
+										{stage.modules.map((module) => (
+											<section class="rounded-2xl bg-[var(--card-bg)] px-4 py-4">
+												<h3 class="font-bold text-90 mb-3">{module.title}</h3>
+												<div class="space-y-2">
+													{module.items.map((item) => (
+														<div class="group rounded-xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] transition px-3 py-2.5">
+															<div class="flex items-start gap-2">
+																<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${stage.accent}`}></span>
+																<div>
+																	<div class="text-sm font-medium text-90 leading-5">{item}</div>
+																	<div class="text-xs text-50 mt-1 opacity-0 group-hover:opacity-100 transition">教程规划中</div>
+																</div>
+															</div>
+														</div>
+													))}
+												</div>
+											</section>
+										))}
+									</div>
+								</div>
+
+								<div class="md:hidden mt-3 rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-4">
+									<div class="text-sm text-50 mb-2">阶段成果</div>
+									<p class="text-75 leading-7">{stage.outcome}</p>
+								</div>
+							</div>
+						</article>
+					);
+				})}
+			</div>
 		</div>
-		<p class="text-75 leading-7">
-			后续可以把已有文章挂到对应节点上，没有文章的节点先标记为计划中，让网站变成一个持续生长的知识路线图。
-		</p>
+	</section>
+
+	<section class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+		<article class="card-base px-6 py-6 onload-animation">
+			<div class="flex items-center gap-3 mb-3">
+				<Icon name="material-symbols:menu-book-outline-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">节点会变成教程</h2>
+			</div>
+			<p class="text-75 leading-7">
+				每个知识点都按“概念解释、最小示例、常见错误、延伸阅读”的结构沉淀，逐步补齐成完整教程库。
+			</p>
+		</article>
+
+		<article class="card-base px-6 py-6 onload-animation">
+			<div class="flex items-center gap-3 mb-3">
+				<Icon name="material-symbols:labs-outline-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">教程会连接实验</h2>
+			</div>
+			<p class="text-75 leading-7">
+				理论节点会尽量连接到实验室工具，比如 Token 成本估算、Prompt 对比器、RAG 流程演示和 Agent 工作流。
+			</p>
+		</article>
+
+		<article class="card-base px-6 py-6 onload-animation">
+			<div class="flex items-center gap-3 mb-3">
+				<Icon name="material-symbols:flag-outline-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">先路线，后内容</h2>
+			</div>
+			<p class="text-75 leading-7">
+				当前先把路线和节点确定下来，后续再把已有文章、项目日志和新教程逐个挂到对应节点上。
+			</p>
+		</article>
 	</section>
 </MainGridLayout>
