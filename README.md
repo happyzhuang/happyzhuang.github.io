@@ -1,99 +1,224 @@
-# 🍥Fuwari  
-![Node.js >= 20](https://img.shields.io/badge/node.js-%3E%3D20-brightgreen) 
-![pnpm >= 9](https://img.shields.io/badge/pnpm-%3E%3D9-blue) 
-[![DeepWiki](https://img.shields.io/badge/DeepWiki-saicaca%2Ffuwari-blue.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAyCAYAAAAnWDnqAAAAAXNSR0IArs4c6QAAA05JREFUaEPtmUtyEzEQhtWTQyQLHNak2AB7ZnyXZMEjXMGeK/AIi+QuHrMnbChYY7MIh8g01fJoopFb0uhhEqqcbWTp06/uv1saEDv4O3n3dV60RfP947Mm9/SQc0ICFQgzfc4CYZoTPAswgSJCCUJUnAAoRHOAUOcATwbmVLWdGoH//PB8mnKqScAhsD0kYP3j/Yt5LPQe2KvcXmGvRHcDnpxfL2zOYJ1mFwrryWTz0advv1Ut4CJgf5uhDuDj5eUcAUoahrdY/56ebRWeraTjMt/00Sh3UDtjgHtQNHwcRGOC98BJEAEymycmYcWwOprTgcB6VZ5JK5TAJ+fXGLBm3FDAmn6oPPjR4rKCAoJCal2eAiQp2x0vxTPB3ALO2CRkwmDy5WohzBDwSEFKRwPbknEggCPB/imwrycgxX2NzoMCHhPkDwqYMr9tRcP5qNrMZHkVnOjRMWwLCcr8ohBVb1OMjxLwGCvjTikrsBOiA6fNyCrm8V1rP93iVPpwaE+gO0SsWmPiXB+jikdf6SizrT5qKasx5j8ABbHpFTx+vFXp9EnYQmLx02h1QTTrl6eDqxLnGjporxl3NL3agEvXdT0WmEost648sQOYAeJS9Q7bfUVoMGnjo4AZdUMQku50McDcMWcBPvr0SzbTAFDfvJqwLzgxwATnCgnp4wDl6Aa+Ax283gghmj+vj7feE2KBBRMW3FzOpLOADl0Isb5587h/U4gGvkt5v60Z1VLG8BhYjbzRwyQZemwAd6cCR5/XFWLYZRIMpX39AR0tjaGGiGzLVyhse5C9RKC6ai42ppWPKiBagOvaYk8lO7DajerabOZP46Lby5wKjw1HCRx7p9sVMOWGzb/vA1hwiWc6jm3MvQDTogQkiqIhJV0nBQBTU+3okKCFDy9WwferkHjtxib7t3xIUQtHxnIwtx4mpg26/HfwVNVDb4oI9RHmx5WGelRVlrtiw43zboCLaxv46AZeB3IlTkwouebTr1y2NjSpHz68WNFjHvupy3q8TFn3Hos2IAk4Ju5dCo8B3wP7VPr/FGaKiG+T+v+TQqIrOqMTL1VdWV1DdmcbO8KXBz6esmYWYKPwDL5b5FA1a0hwapHiom0r/cKaoqr+27/XcrS5UwSMbQAAAABJRU5ErkJggg==)](https://deepwiki.com/saicaca/fuwari)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsaicaca%2Ffuwari.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsaicaca%2Ffuwari?ref=badge_shield&issueType=license)
+# LLM, Hello!
 
-A static blog template built with [Astro](https://astro.build).
+`LLM, Hello!` 是部署在 [llmhello.com](https://llmhello.com) 的个人技术博客与 LLM 实验型知识站点。
 
-[**🖥️ Live Demo (Vercel)**](https://fuwari.vercel.app)
+这个项目最初基于 Fuwari / Astro 博客主题搭建，目前正在从“文章型技术博客”升级为围绕大模型、Agent、Prompt、RAG 与人机协作的个人实验室。
 
-![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
+## 网站定位
 
-🌏 README in
-[**中文**](https://github.com/saicaca/fuwari/blob/main/docs/README.zh-CN.md) /
-[**日本語**](https://github.com/saicaca/fuwari/blob/main/docs/README.ja.md) /
-[**한국어**](https://github.com/saicaca/fuwari/blob/main/docs/README.ko.md) /
-[**Español**](https://github.com/saicaca/fuwari/blob/main/docs/README.es.md) /
-[**ไทย**](https://github.com/saicaca/fuwari/blob/main/docs/README.th.md) /
-[**Tiếng Việt**](https://github.com/saicaca/fuwari/blob/main/docs/README.vi.md) /
-[**Bahasa Indonesia**](https://github.com/saicaca/fuwari/blob/main/docs/README.id.md) (Provided by the community and may not always be up-to-date)
+当前目标不是做一个复杂 SaaS，而是先把静态博客扩展成一个更丰富、可持续生长的 AI 技术站点：
 
-## ✨ Features
+- 技术文章：记录 LLM、RAG、Agent、应用开发和部署实践。
+- 学习地图：把零散文章组织成一条可持续更新的学习路线。
+- 实验室：承载轻量前端工具、流程演示和模型行为观察。
+- Prompt 配方：沉淀可复用提示词模板和使用经验。
+- 项目日志：记录真实项目从想法、原型、踩坑到上线的过程。
 
-- [x] Built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com)
-- [x] Smooth animations and page transitions
-- [x] Light / dark mode
-- [x] Customizable theme colors & banner
-- [x] Responsive design
-- [x] Search functionality with [Pagefind](https://pagefind.app/)
-- [x] [Markdown extended features](https://github.com/saicaca/fuwari?tab=readme-ov-file#-markdown-extended-syntax)
-- [x] Table of contents
-- [x] RSS feed
+详细规划见：[docs/llmhello-site-plan.md](docs/llmhello-site-plan.md)。
 
-## 🚀 Getting Started
+## 当前站点结构
 
-1. Create your blog repository:
-    - [Generate a new repository](https://github.com/saicaca/fuwari/generate) from this template or fork this repository.
-    - Or run one of the following commands:
-       ```sh
-       npm create fuwari@latest
-       yarn create fuwari
-       pnpm create fuwari@latest
-       bun create fuwari@latest
-       deno run -A npm:create-fuwari@latest
-       ```
-2. To edit your blog locally, clone your repository, run `pnpm install` to install dependencies.
-    - Install [pnpm](https://pnpm.io) `npm install -g pnpm` if you haven't.
-3. Edit the config file `src/config.ts` to customize your blog.
-4. Run `pnpm new-post <filename>` to create a new post and edit it in `src/content/posts/`.
-5. Deploy your blog to Vercel, Netlify, GitHub Pages, etc. following [the guides](https://docs.astro.build/en/guides/deploy/). You need to edit the site configuration in `astro.config.mjs` before deployment.
+主要页面：
 
-## 📝 Frontmatter of Posts
+- `/`：首页，包含站点入口和最新文章。
+- `/labs/`：实验室，目前包含 Token 成本估算器。
+- `/map/`：LLM 学习地图。
+- `/prompts/`：Prompt 配方。
+- `/projects/`：项目日志。
+- `/archive/`：文章归档。
+- `/about/`：关于页面。
+
+主要源码目录：
+
+```text
+src/
+  components/        Astro / Svelte 组件
+  content/posts/     博客文章
+  content/spec/      特殊页面内容
+  layouts/           页面布局
+  pages/             Astro 路由页面
+  styles/            全局样式
+  utils/             内容、日期、URL 等工具函数
+docs/
+  llmhello-site-plan.md  网站规划文档
+public/
+  CNAME              GitHub Pages 自定义域名
+```
+
+## 技术栈
+
+- [Astro](https://astro.build/)：静态站点框架
+- [Svelte](https://svelte.dev/)：交互组件
+- [Tailwind CSS](https://tailwindcss.com/)：样式工具
+- [Pagefind](https://pagefind.app/)：静态搜索
+- [Expressive Code](https://expressive-code.com/)：代码块增强
+- [Astro Icon](https://www.astroicon.dev/) / Iconify：图标
+- GitHub Pages：站点托管
+
+## 本地运行
+
+建议使用 Node.js LTS 和 pnpm。
+
+检查环境：
+
+```powershell
+node -v
+npm -v
+pnpm -v
+```
+
+如果还没有 pnpm，可以用 Corepack 启用：
+
+```powershell
+corepack enable
+corepack prepare pnpm@9.14.4 --activate
+```
+
+安装依赖：
+
+```powershell
+pnpm install
+```
+
+启动开发服务器：
+
+```powershell
+pnpm dev
+```
+
+默认访问：
+
+```text
+http://localhost:4321/
+```
+
+构建生产版本：
+
+```powershell
+pnpm build
+```
+
+本地预览生产构建：
+
+```powershell
+pnpm preview
+```
+
+## 常用命令
+
+| 命令 | 说明 |
+| --- | --- |
+| `pnpm install` | 安装依赖 |
+| `pnpm dev` | 启动本地开发服务器 |
+| `pnpm build` | 构建生产站点，并生成 Pagefind 搜索索引 |
+| `pnpm preview` | 本地预览生产构建 |
+| `pnpm check` | 运行 Astro 检查 |
+| `pnpm type-check` | 运行 TypeScript 类型检查 |
+| `pnpm format` | 使用 Biome 格式化 `src` |
+| `pnpm lint` | 使用 Biome 检查并修复 `src` |
+| `pnpm new-post <filename>` | 创建新文章 |
+
+## 新建文章
+
+推荐使用脚本：
+
+```powershell
+pnpm new-post my-post
+```
+
+文章位于：
+
+```text
+src/content/posts/
+```
+
+文章 frontmatter 示例：
 
 ```yaml
 ---
-title: My First Blog Post
-published: 2023-09-09
-description: This is the first post of my new Astro blog.
+title: 我的第一篇文章
+published: 2026-01-01
+description: 文章摘要
 image: ./cover.jpg
-tags: [Foo, Bar]
-category: Front-end
+tags: [LLM, RAG]
+category: AI 工程
 draft: false
-lang: jp      # Set only if the post's language differs from the site's language in `config.ts`
+lang: zh_CN
 ---
 ```
 
-## 🧩 Markdown Extended Syntax
+字段说明：
 
-In addition to Astro's default support for [GitHub Flavored Markdown](https://github.github.com/gfm/), several extra Markdown features are included:
+- `title`：文章标题
+- `published`：发布时间
+- `updated`：更新时间，可选
+- `description`：文章摘要
+- `image`：封面图，可选
+- `tags`：标签
+- `category`：分类
+- `draft`：是否草稿
+- `lang`：文章语言，可选
 
-- Admonitions ([Preview and Usage](https://fuwari.vercel.app/posts/markdown-extended/#admonitions))
-- GitHub repository cards ([Preview and Usage](https://fuwari.vercel.app/posts/markdown-extended/#github-repository-cards))
-- Enhanced code blocks with Expressive Code ([Preview](https://fuwari.vercel.app/posts/expressive-code/) / [Docs](https://expressive-code.com/))
+## Markdown 能力
 
-## ⚡ Commands
+项目保留了 Fuwari 主题中的 Markdown 增强能力：
 
-All commands are run from the root of the project, from a terminal:
+- GitHub Flavored Markdown
+- Admonitions 提示块
+- GitHub 仓库卡片
+- Expressive Code 代码高亮
+- 数学公式
+- 文章目录
+- 图片预览
 
-| Command                    | Action                                              |
-|:---------------------------|:----------------------------------------------------|
-| `pnpm install`             | Installs dependencies                               |
-| `pnpm dev`                 | Starts local dev server at `localhost:4321`         |
-| `pnpm build`               | Build your production site to `./dist/`             |
-| `pnpm preview`             | Preview your build locally, before deploying        |
-| `pnpm check`               | Run checks for errors in your code                  |
-| `pnpm format`              | Format your code using Biome                        |
-| `pnpm new-post <filename>` | Create a new post                                   |
-| `pnpm astro ...`           | Run CLI commands like `astro add`, `astro check`    |
-| `pnpm astro --help`        | Get help using the Astro CLI                        |
+## 部署
 
-## ✏️ Contributing
+当前站点托管在 GitHub Pages，并通过 `public/CNAME` 绑定：
 
-Check out the [Contributing Guide](https://github.com/saicaca/fuwari/blob/main/CONTRIBUTING.md) for details on how to contribute to this project.
+```text
+llmhello.com
+```
 
-## 📄 License
+构建产物输出到：
 
-This project is licensed under the MIT License.
+```text
+dist/
+```
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsaicaca%2Ffuwari.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsaicaca%2Ffuwari?ref=badge_large&issueType=license)
+当前阶段保持静态站点架构。后续如果接入真实 LLM API，建议新增独立后端服务，例如：
+
+```text
+api.llmhello.com
+```
+
+如果未来出现用户登录、文档上传、私有知识库、数据库或复杂 Agent 后台任务，再考虑新增独立应用：
+
+```text
+app.llmhello.com
+```
+
+## 当前状态
+
+已完成：
+
+- 修正站点名称、中文副标题和个人简介。
+- 首页已从文章列表页改为正式门户页。
+- 新增实验室、学习地图、Prompt 配方、项目日志页面。
+- 新增 Token 成本估算器。
+- 扩展顶部导航，并优化中小屏菜单行为。
+- 支持首页使用无侧边栏宽版布局。
+- 新增网站规划文档。
+- 已通过 `pnpm build` 构建验证。
+
+待完成：
+
+- 把已有文章挂到学习地图。
+- 实现 Prompt 对比器。
+- 实现 RAG 流程演示。
+- 实现 Agent 工作流演示。
+- 补充 Prompt 配方库。
+- 为网站升级写第一篇项目日志。
+
+## 许可
+
+当前项目继承原主题的 MIT License。站点内容的版权和授权可在后续按个人博客策略单独补充说明。

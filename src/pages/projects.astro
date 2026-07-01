@@ -1,0 +1,30 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+const projects = [
+	["LLM, Hello! 网站升级", "进行中", "把普通技术博客升级为 LLM 学习地图、实验室、Prompt 配方和项目日志的组合。"],
+	["个人 RAG 知识库", "计划中", "从最小可用原型开始，记录切块、检索、重排和评测的全过程。"],
+	["Agent 工程样板", "计划中", "沉淀一个小型 Agent 项目的任务拆解、工具调用和可观测性实践。"],
+];
+---
+
+<MainGridLayout title="项目日志">
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">项目日志</h1>
+		<p class="text-75 text-lg leading-8 max-w-3xl">
+			这里记录真实项目从想法到上线的过程。相比只写结论，项目日志会保留决策、取舍、失败和迭代轨迹。
+		</p>
+	</section>
+
+	<section class="grid grid-cols-1 gap-4 mb-4">
+		{projects.map(([title, status, description]) => (
+			<article class="card-base px-6 py-6 md:px-9 onload-animation">
+				<div class="flex items-center justify-between gap-3 mb-3">
+					<h2 class="text-2xl font-bold text-90">{title}</h2>
+					<span class="text-xs rounded-lg px-2.5 py-1 bg-[var(--btn-regular-bg)] text-[var(--btn-content)]">{status}</span>
+				</div>
+				<p class="text-75 leading-7">{description}</p>
+			</article>
+		))}
+	</section>
+</MainGridLayout>

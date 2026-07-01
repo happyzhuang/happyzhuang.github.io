@@ -8,8 +8,8 @@ import type {
 import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
-	title: "LLM，Hello!",
-	subtitle: "AI for Everyone",
+	title: "LLM, Hello!",
+	subtitle: "写给每个人的 AI 技术博客",
 	lang: "zh_CN", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
 	themeColor: {
 		hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
@@ -42,6 +42,22 @@ export const siteConfig: SiteConfig = {
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
+		{
+			name: "实验室",
+			url: "/labs/",
+		},
+		{
+			name: "学习地图",
+			url: "/map/",
+		},
+		{
+			name: "Prompt",
+			url: "/prompts/",
+		},
+		{
+			name: "项目",
+			url: "/projects/",
+		},
 		LinkPreset.Archive,
 		LinkPreset.About,
 		{
@@ -55,7 +71,7 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/touxiang.jpeg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Happy Zhuang",
-	bio: "探索AI的奇妙世界，记录技术成长的点滴历程",
+	bio: "探索 AI 的奇妙世界，记录技术成长的点滴历程",
 	links: [
 		{
 			name: "GitHub",

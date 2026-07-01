@@ -1,0 +1,41 @@
+---
+import { Icon } from "astro-icon/components";
+import TokenEstimator from "@components/labs/TokenEstimator.svelte";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+const experiments = [
+	["Token 成本估算器", "已上线", "估算输入 token、输出 token 和调用成本，适合作为第一个轻量工具。"],
+	["Prompt 对比器", "计划中", "对比普通提问、结构化提问、角色设定和 few-shot 的输出差异。"],
+	["RAG 流程演示", "计划中", "把切块、向量化、检索和生成过程拆成可视化步骤。"],
+	["Agent 工作流", "计划中", "展示任务拆解、工具调用、反思修正和最终输出的过程。"],
+];
+---
+
+<MainGridLayout title="实验室">
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">实验室</h1>
+		<p class="text-75 text-lg leading-8 max-w-3xl">
+			这里放可交互的小工具、流程演示和模型行为观察。第一版先从不需要后端的前端实验开始，后续再接入真实模型 API。
+		</p>
+	</section>
+
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<div class="flex items-center gap-3 mb-5">
+			<Icon name="material-symbols:calculate-outline-rounded" class="text-[var(--primary)] text-3xl" />
+			<h2 class="text-2xl font-bold text-90">Token 成本估算器</h2>
+		</div>
+		<TokenEstimator client:load />
+	</section>
+
+	<section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+		{experiments.map(([title, status, description]) => (
+			<div class="card-base px-6 py-5 onload-animation">
+				<div class="flex items-center justify-between gap-3 mb-3">
+					<h2 class="font-bold text-xl text-90">{title}</h2>
+					<span class="text-xs rounded-lg px-2.5 py-1 bg-[var(--btn-regular-bg)] text-[var(--btn-content)]">{status}</span>
+				</div>
+				<p class="text-75 leading-7">{description}</p>
+			</div>
+		))}
+	</section>
+</MainGridLayout>

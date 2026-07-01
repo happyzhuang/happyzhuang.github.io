@@ -1,0 +1,40 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+const recipes = [
+	{
+		title: "结构化技术解释",
+		scene: "把一个技术概念讲给有基础但不熟悉该领域的读者。",
+		prompt: "请用「一句话定义 / 核心机制 / 典型场景 / 常见误区 / 最小示例」解释：{topic}",
+	},
+	{
+		title: "代码审查助手",
+		scene: "让模型优先找 bug、风险和遗漏测试，而不是泛泛总结。",
+		prompt: "请以代码审查视角检查以下变更，按严重程度列出问题，并给出文件位置、原因和修复建议：{diff}",
+	},
+	{
+		title: "项目日志整理",
+		scene: "把零散开发记录整理成一篇可读的工程复盘。",
+		prompt: "请把以下开发记录整理为项目日志，包含背景、关键决策、踩坑、解决方案和下一步：{notes}",
+	},
+];
+---
+
+<MainGridLayout title="Prompt 配方">
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">Prompt 配方</h1>
+		<p class="text-75 text-lg leading-8 max-w-3xl">
+			这里收集可复用的提示词模板。每个配方都尽量说明场景、输入形式、输出预期和容易失败的地方。
+		</p>
+	</section>
+
+	<section class="grid grid-cols-1 gap-4 mb-4">
+		{recipes.map((recipe) => (
+			<article class="card-base px-6 py-6 md:px-9 onload-animation">
+				<h2 class="text-2xl font-bold text-90 mb-2">{recipe.title}</h2>
+				<p class="text-75 leading-7 mb-4">{recipe.scene}</p>
+				<pre class="rounded-2xl bg-[var(--codeblock-bg)] text-white/85 px-4 py-4 overflow-x-auto text-sm leading-6"><code>{recipe.prompt}</code></pre>
+			</article>
+		))}
+	</section>
+</MainGridLayout>

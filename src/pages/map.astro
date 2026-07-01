@@ -1,0 +1,46 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+const tracks = [
+	["LLM 基础", "理解模型能力边界、上下文窗口、token、温度参数和常见误区。"],
+	["Prompt Engineering", "从任务描述、角色、约束、示例到结构化输出，形成可复用模板。"],
+	["Embedding 与 RAG", "理解向量化、切块、召回、重排和答案生成，不把 RAG 简化成向量库。"],
+	["Tool Use / Function Calling", "让模型调用外部工具，处理真实世界任务和结构化动作。"],
+	["Agent 工程", "任务规划、记忆、反思、工具调用和可观测性。"],
+	["评测与成本", "建立评测集、观察失败案例，并控制延迟、成本和上下文占用。"],
+];
+---
+
+<MainGridLayout title="学习地图">
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">LLM 学习地图</h1>
+		<p class="text-75 text-lg leading-8 max-w-3xl">
+			这张地图用来组织后续文章和实验：先建立概念，再进入工程实践，最后沉淀成可复用的方法和项目。
+		</p>
+	</section>
+
+	<section class="card-base px-4 md:px-6 py-4 mb-4 onload-animation">
+		{tracks.map(([title, description], index) => (
+			<div class="flex gap-4 px-2 py-5 border-b border-dashed border-black/10 dark:border-white/[0.15] last:border-b-0">
+				<div class="shrink-0 w-10 h-10 rounded-xl bg-[var(--btn-regular-bg)] text-[var(--primary)] flex items-center justify-center font-bold">
+					{index + 1}
+				</div>
+				<div>
+					<h2 class="text-xl font-bold text-90 mb-1">{title}</h2>
+					<p class="text-75 leading-7">{description}</p>
+				</div>
+			</div>
+		))}
+	</section>
+
+	<section class="card-base px-6 py-6 md:px-9 mb-4 onload-animation">
+		<div class="flex items-center gap-3 mb-3">
+			<Icon name="material-symbols:flag-outline-rounded" class="text-[var(--primary)] text-3xl" />
+			<h2 class="text-2xl font-bold text-90">下一步</h2>
+		</div>
+		<p class="text-75 leading-7">
+			后续可以把已有文章挂到对应节点上，没有文章的节点先标记为计划中，让网站变成一个持续生长的知识路线图。
+		</p>
+	</section>
+</MainGridLayout>
