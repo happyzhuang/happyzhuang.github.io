@@ -1,13 +1,16 @@
 ---
 import { Icon } from "astro-icon/components";
+import AgentWorkflowDemo from "@components/labs/AgentWorkflowDemo.svelte";
+import PromptComparator from "@components/labs/PromptComparator.svelte";
+import RagFlowDemo from "@components/labs/RagFlowDemo.svelte";
 import TokenEstimator from "@components/labs/TokenEstimator.svelte";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 
 const experiments = [
 	["Token 成本估算器", "已上线", "估算输入 token、输出 token 和调用成本，适合作为第一个轻量工具。"],
-	["Prompt 对比器", "计划中", "对比普通提问、结构化提问、角色设定和 few-shot 的输出差异。"],
-	["RAG 流程演示", "计划中", "把切块、向量化、检索和生成过程拆成可视化步骤。"],
-	["Agent 工作流", "计划中", "展示任务拆解、工具调用、反思修正和最终输出的过程。"],
+	["Prompt 对比器", "已上线", "对比普通提问、结构化提问、角色设定和 few-shot 的输出差异。"],
+	["RAG 流程演示", "已上线", "把切块、向量化、检索和生成过程拆成可视化步骤。"],
+	["Agent 工作流", "已上线", "展示任务拆解、工具调用、反思修正和最终输出的过程。"],
 ];
 ---
 
@@ -17,6 +20,30 @@ const experiments = [
 		<p class="text-75 text-lg leading-8 max-w-3xl">
 			这里放可交互的小工具、流程演示和模型行为观察。第一版先从不需要后端的前端实验开始，后续再接入真实模型 API。
 		</p>
+	</section>
+
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<div class="flex items-center gap-3 mb-5">
+			<Icon name="material-symbols:compare-arrows-rounded" class="text-[var(--primary)] text-3xl" />
+			<h2 class="text-2xl font-bold text-90">Prompt 对比器</h2>
+		</div>
+		<PromptComparator client:load />
+	</section>
+
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<div class="flex items-center gap-3 mb-5">
+			<Icon name="material-symbols:account-tree-outline-rounded" class="text-[var(--primary)] text-3xl" />
+			<h2 class="text-2xl font-bold text-90">RAG 流程演示</h2>
+		</div>
+		<RagFlowDemo client:load />
+	</section>
+
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<div class="flex items-center gap-3 mb-5">
+			<Icon name="material-symbols:robot-2-outline-rounded" class="text-[var(--primary)] text-3xl" />
+			<h2 class="text-2xl font-bold text-90">Agent 工作流</h2>
+		</div>
+		<AgentWorkflowDemo client:load />
 	</section>
 
 	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">

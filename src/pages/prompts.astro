@@ -1,40 +1,122 @@
 ---
+import { Icon } from "astro-icon/components";
+import PromptLibrary from "@components/prompts/PromptLibrary.svelte";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 
-const recipes = [
+const principles = [
 	{
-		title: "结构化技术解释",
-		scene: "把一个技术概念讲给有基础但不熟悉该领域的读者。",
-		prompt: "请用「一句话定义 / 核心机制 / 典型场景 / 常见误区 / 最小示例」解释：{topic}",
+		title: "先说任务",
+		description: "把你要模型完成的动作放在最前面，例如解释、改写、审查、规划或生成。",
+		icon: "material-symbols:flag-rounded",
 	},
 	{
-		title: "代码审查助手",
-		scene: "让模型优先找 bug、风险和遗漏测试，而不是泛泛总结。",
-		prompt: "请以代码审查视角检查以下变更，按严重程度列出问题，并给出文件位置、原因和修复建议：{diff}",
+		title: "补足上下文",
+		description: "说明目标读者、使用场景、已有资料和限制条件，减少模型自由发挥。",
+		icon: "material-symbols:docs-outline-rounded",
 	},
 	{
-		title: "项目日志整理",
-		scene: "把零散开发记录整理成一篇可读的工程复盘。",
-		prompt: "请把以下开发记录整理为项目日志，包含背景、关键决策、踩坑、解决方案和下一步：{notes}",
+		title: "限定输出",
+		description: "提前定义格式、粒度、长度、语气和判断标准，让结果更容易直接使用。",
+		icon: "material-symbols:format-list-bulleted-rounded",
 	},
+	{
+		title: "要求自检",
+		description: "让模型标出不确定信息、潜在风险和下一步问题，避免看起来很完整但其实不可靠。",
+		icon: "material-symbols:fact-check-outline-rounded",
+	},
+];
+
+const anatomy = [
+	["角色", "让模型进入合适的专业视角，例如工程导师、代码审查者、产品经理。"],
+	["任务", "明确动词和目标，不要只给一个宽泛主题。"],
+	["背景", "补充读者、业务、代码、文档或约束条件。"],
+	["输入", "贴出需要处理的材料，并用清晰分隔符包起来。"],
+	["输出", "指定格式、章节、表格字段、语气和长度。"],
+	["检查", "要求指出缺失信息、风险、假设和可继续追问的问题。"],
+];
+
+const badPatterns = [
+	["过于宽泛", "例如“帮我写一篇 AI 文章”，模型会倾向于输出泛泛内容。"],
+	["只给结论不说用途", "同一个主题用于博客、汇报、代码注释时，输出应该完全不同。"],
+	["没有边界", "不说明不能编造、不能扩展、不能脱离资料，容易产生幻觉。"],
+	["一次塞太多目标", "同时要求研究、写作、排版、翻译和审查，会让结果失焦。"],
 ];
 ---
 
 <MainGridLayout title="Prompt 配方">
 	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
-		<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">Prompt 配方</h1>
-		<p class="text-75 text-lg leading-8 max-w-3xl">
-			这里收集可复用的提示词模板。每个配方都尽量说明场景、输入形式、输出预期和容易失败的地方。
-		</p>
+		<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+			<div class="max-w-3xl">
+				<div class="flex items-center gap-3 mb-4">
+					<Icon name="material-symbols:edit-note-outline-rounded" class="text-[var(--primary)] text-4xl" />
+					<h1 class="text-3xl md:text-4xl font-bold text-90">Prompt 配方</h1>
+				</div>
+				<p class="text-75 text-lg leading-8">
+					这里不做“神奇咒语”收集，而是把提示词拆成可理解、可复用、可迭代的任务模板。你可以先看方法框架，再从配方库里复制适合的版本。
+				</p>
+			</div>
+			<div class="grid grid-cols-3 gap-3 min-w-full lg:min-w-[20rem]">
+				<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-3">
+					<div class="text-2xl font-bold text-90">12</div>
+					<div class="text-xs text-50">常用模板</div>
+				</div>
+				<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-3">
+					<div class="text-2xl font-bold text-90">6</div>
+					<div class="text-xs text-50">任务分类</div>
+				</div>
+				<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-3">
+					<div class="text-2xl font-bold text-90">1</div>
+					<div class="text-xs text-50">复制可用</div>
+				</div>
+			</div>
+		</div>
 	</section>
 
-	<section class="grid grid-cols-1 gap-4 mb-4">
-		{recipes.map((recipe) => (
-			<article class="card-base px-6 py-6 md:px-9 onload-animation">
-				<h2 class="text-2xl font-bold text-90 mb-2">{recipe.title}</h2>
-				<p class="text-75 leading-7 mb-4">{recipe.scene}</p>
-				<pre class="rounded-2xl bg-[var(--codeblock-bg)] text-white/85 px-4 py-4 overflow-x-auto text-sm leading-6"><code>{recipe.prompt}</code></pre>
+	<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-4">
+		{principles.map((item) => (
+			<article class="card-base px-5 py-5 onload-animation">
+				<div class="flex items-center gap-3 mb-3">
+					<div class="grid size-10 place-items-center rounded-2xl bg-[var(--btn-regular-bg)]">
+						<Icon name={item.icon} class="text-[var(--primary)] text-2xl" />
+					</div>
+					<h2 class="text-xl font-bold text-90">{item.title}</h2>
+				</div>
+				<p class="text-75 leading-7">{item.description}</p>
 			</article>
 		))}
 	</section>
+
+	<section class="grid grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-4 mb-4">
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<div class="flex items-center gap-3 mb-5">
+				<Icon name="material-symbols:account-tree-outline-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">一个稳定 Prompt 的结构</h2>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+				{anatomy.map(([title, description]) => (
+					<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-4">
+						<div class="font-bold text-90 mb-2">{title}</div>
+						<p class="text-sm text-75 leading-6">{description}</p>
+					</div>
+				))}
+			</div>
+		</article>
+
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<div class="flex items-center gap-3 mb-5">
+				<Icon name="material-symbols:warning-outline-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">容易失效的写法</h2>
+			</div>
+			<div class="space-y-3">
+				{badPatterns.map(([title, description]) => (
+					<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-4">
+						<div class="font-bold text-90 mb-1">{title}</div>
+						<p class="text-sm text-75 leading-6">{description}</p>
+					</div>
+				))}
+			</div>
+		</article>
+	</section>
+
+	<PromptLibrary client:load />
 </MainGridLayout>
