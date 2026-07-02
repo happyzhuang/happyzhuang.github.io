@@ -1,29 +1,78 @@
 ---
+import { Icon } from "astro-icon/components";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 
-const projects = [
-	["LLM, Hello! 网站升级", "进行中", "把普通技术博客升级为 LLM 学习地图、实验室、Prompt 配方和项目日志的组合。"],
-	["个人 RAG 知识库", "计划中", "从最小可用原型开始，记录切块、检索、重排和评测的全过程。"],
-	["Agent 工程样板", "计划中", "沉淀一个小型 Agent 项目的任务拆解、工具调用和可观测性实践。"],
+const cases = [
+	{
+		title: "Hello LLM：第一次调用模型 API",
+		status: "准备中",
+		level: "入门",
+		description: "用最少代码完成一次文本生成、流式输出和错误处理，建立后续案例的工程模板。",
+		stack: ["API Key", "HTTP Client", "Streaming", "Env"],
+		deliverables: ["最小可运行脚本", "环境变量示例", "常见错误清单"],
+	},
+	{
+		title: "个人 RAG 知识库",
+		status: "计划中",
+		level: "实战",
+		description: "从文档切块、向量化、召回、重排到答案引用，记录一个可复现知识库助手的完整链路。",
+		stack: ["Embedding", "Vector DB", "Rerank", "Citation"],
+		deliverables: ["架构图", "核心代码", "评测样例"],
+	},
+	{
+		title: "Agent 工程样板",
+		status: "计划中",
+		level: "进阶",
+		description: "沉淀一个小型 Agent 项目的任务拆解、工具调用、执行日志和失败恢复实践。",
+		stack: ["Tool Use", "Planning", "Memory", "Observability"],
+		deliverables: ["工具协议", "执行轨迹", "失败恢复策略"],
+	},
+	{
+		title: "模型切换与成本对比",
+		status: "计划中",
+		level: "工程",
+		description: "把同一任务接到不同模型 API 上，比较输出质量、延迟、成本和接入复杂度。",
+		stack: ["OpenAI Compatible", "DeepSeek", "Qwen", "Cost"],
+		deliverables: ["统一调用封装", "对比表", "选型建议"],
+	},
 ];
 ---
 
-<MainGridLayout title="项目日志">
+<MainGridLayout title="实战案例">
 	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
-		<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">项目日志</h1>
+		<div class="flex items-center gap-3 mb-4">
+			<Icon name="material-symbols:construction-rounded" class="text-[var(--primary)] text-4xl" />
+			<h1 class="text-3xl md:text-4xl font-bold text-90">实战案例</h1>
+		</div>
 		<p class="text-75 text-lg leading-8 max-w-3xl">
-			这里记录真实项目从想法到上线的过程。相比只写结论，项目日志会保留决策、取舍、失败和迭代轨迹。
+			这里不做泛泛的项目展示，而是沉淀可复现的 LLM 应用样板。每个案例都按目标、技术栈、核心代码、部署方式和踩坑笔记逐步补齐。
 		</p>
 	</section>
 
-	<section class="grid grid-cols-1 gap-4 mb-4">
-		{projects.map(([title, status, description]) => (
-			<article class="card-base px-6 py-6 md:px-9 onload-animation">
+	<section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+		{cases.map((item) => (
+			<article class="card-base px-6 py-6 md:px-8 onload-animation">
 				<div class="flex items-center justify-between gap-3 mb-3">
-					<h2 class="text-2xl font-bold text-90">{title}</h2>
-					<span class="text-xs rounded-lg px-2.5 py-1 bg-[var(--btn-regular-bg)] text-[var(--btn-content)]">{status}</span>
+					<div>
+						<div class="text-sm text-[var(--primary)] font-bold mb-1">{item.level}</div>
+						<h2 class="text-2xl font-bold text-90">{item.title}</h2>
+					</div>
+					<span class="shrink-0 text-xs rounded-lg px-2.5 py-1 bg-[var(--btn-regular-bg)] text-[var(--btn-content)]">{item.status}</span>
 				</div>
-				<p class="text-75 leading-7">{description}</p>
+				<p class="text-75 leading-7 mb-4">{item.description}</p>
+				<div class="flex flex-wrap gap-2 mb-4">
+					{item.stack.map((tag) => (
+						<span class="text-xs rounded-lg px-2.5 py-1 bg-[var(--btn-regular-bg)] text-75">{tag}</span>
+					))}
+				</div>
+				<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-4">
+					<div class="text-sm font-bold text-90 mb-2">案例产物</div>
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+						{item.deliverables.map((deliverable) => (
+							<div class="rounded-xl bg-[var(--card-bg)] px-3 py-2 text-sm text-75">{deliverable}</div>
+						))}
+					</div>
+				</div>
 			</article>
 		))}
 	</section>

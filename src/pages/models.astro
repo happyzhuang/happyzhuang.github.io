@@ -1,0 +1,383 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+type ModelRow = {
+	rank: number;
+	name: string;
+	provider: string;
+	score: number;
+	delta?: string;
+};
+
+type Board = {
+	title: string;
+	icon: string;
+	filter?: string;
+	rows: ModelRow[];
+};
+
+const providerMarks: Record<string, string> = {
+	Anthropic: "AI",
+	OpenAI: "◎",
+	Google: "G",
+	Meta: "∞",
+	Zhipu: "Z",
+	xAI: "x1",
+	DeepSeek: "DS",
+	Kimi: "K",
+	MiniMax: "M",
+	Runway: "R",
+	ByteDance: "豆",
+};
+
+const providerTone: Record<string, string> = {
+	Anthropic: "text-black dark:text-white",
+	OpenAI: "text-neutral-500",
+	Google: "text-[oklch(0.62_0.18_245)]",
+	Meta: "text-[oklch(0.58_0.2_260)]",
+	Zhipu: "text-[oklch(0.55_0.18_90)]",
+	xAI: "text-black dark:text-white",
+	DeepSeek: "text-[oklch(0.58_0.14_210)]",
+	Kimi: "text-black dark:text-white",
+	MiniMax: "text-[oklch(0.56_0.16_300)]",
+	Runway: "text-[oklch(0.58_0.15_160)]",
+	ByteDance: "text-[oklch(0.64_0.18_35)]",
+};
+
+const agentRows: ModelRow[] = [
+	{ rank: 1, name: "Claude Fable 5 (High)", provider: "Anthropic", score: 13.34, delta: "+1.55%" },
+	{ rank: 2, name: "Claude Opus 4.8 (Thinking)", provider: "Anthropic", score: 9.37, delta: "+1.29%" },
+	{ rank: 3, name: "GPT 5.5 (xHigh)", provider: "OpenAI", score: 8.21, delta: "+1.02%" },
+	{ rank: 4, name: "Claude Opus 4.7", provider: "Anthropic", score: 8.16, delta: "+1.28%" },
+	{ rank: 5, name: "Claude Opus 4.7 (Thinking)", provider: "Anthropic", score: 8.07, delta: "+1.23%" },
+	{ rank: 6, name: "GPT 5.5 (High)", provider: "OpenAI", score: 7.13, delta: "+0.79%" },
+	{ rank: 7, name: "GLM 5.2 (Max)", provider: "Zhipu", score: 6.93, delta: "+0.40%" },
+	{ rank: 8, name: "GPT 5.4 (High)", provider: "OpenAI", score: 6.65, delta: "+0.75%" },
+	{ rank: 9, name: "Claude Opus 4.6", provider: "Anthropic", score: 6.47, delta: "+1.21%" },
+	{ rank: 10, name: "GPT 5.5", provider: "OpenAI", score: 6.22, delta: "+0.72%" },
+];
+
+const boards: Board[] = [
+	{
+		title: "Text",
+		icon: "material-symbols:chat-bubble-outline-rounded",
+		filter: "Overall",
+		rows: [
+			{ rank: 1, name: "claude-fable-5", provider: "Anthropic", score: 1508, delta: "±9" },
+			{ rank: 2, name: "claude-opus-4-6-thinking", provider: "Anthropic", score: 1503, delta: "±4" },
+			{ rank: 3, name: "claude-opus-4-7-thinking", provider: "Anthropic", score: 1502, delta: "±4" },
+			{ rank: 4, name: "claude-opus-4-6", provider: "Anthropic", score: 1499, delta: "±4" },
+			{ rank: 5, name: "claude-opus-4-7", provider: "Anthropic", score: 1494, delta: "±4" },
+			{ rank: 6, name: "muse-spark", provider: "Meta", score: 1487, delta: "±4" },
+			{ rank: 7, name: "gemini-3.1-pro-preview", provider: "Google", score: 1486, delta: "±4" },
+			{ rank: 8, name: "gemini-3-pro", provider: "Google", score: 1486, delta: "±4" },
+			{ rank: 9, name: "claude-opus-4-8-thinking", provider: "Anthropic", score: 1484, delta: "±4" },
+			{ rank: 10, name: "gpt-5.5-high", provider: "OpenAI", score: 1481, delta: "±5" },
+		],
+	},
+	{
+		title: "WebDev",
+		icon: "material-symbols:code-blocks-outline-rounded",
+		filter: "Overall",
+		rows: [
+			{ rank: 1, name: "claude-fable-5", provider: "Anthropic", score: 1654, delta: "+16/-16" },
+			{ rank: 2, name: "glm-5.2 (max)", provider: "Zhipu", score: 1593, delta: "+15/-15" },
+			{ rank: 3, name: "claude-opus-4-8-thinking", provider: "Anthropic", score: 1565, delta: "+12/-12" },
+			{ rank: 4, name: "claude-opus-4-7-thinking", provider: "Anthropic", score: 1563, delta: "+8/-8" },
+			{ rank: 5, name: "claude-opus-4-7", provider: "Anthropic", score: 1557, delta: "+8/-8" },
+			{ rank: 6, name: "claude-opus-4-8", provider: "Anthropic", score: 1542, delta: "+14/-11" },
+			{ rank: 7, name: "claude-opus-4-6-thinking", provider: "Anthropic", score: 1542, delta: "+15/-12" },
+			{ rank: 8, name: "seed-2.1-pro-preview", provider: "ByteDance", score: 1539, delta: "+15/-15" },
+			{ rank: 9, name: "claude-opus-4-6", provider: "Anthropic", score: 1538, delta: "+11/-11" },
+			{ rank: 10, name: "qwen3.7-max-20260517", provider: "Zhipu", score: 1530, delta: "+14/-13" },
+		],
+	},
+	{
+		title: "Vision",
+		icon: "material-symbols:visibility-outline-rounded",
+		filter: "Overall",
+		rows: [
+			{ rank: 1, name: "claude-fable-5", provider: "Anthropic", score: 1311, delta: "±14" },
+			{ rank: 2, name: "claude-opus-4-7-thinking", provider: "Anthropic", score: 1308, delta: "±7" },
+			{ rank: 3, name: "claude-opus-4-6-thinking", provider: "Anthropic", score: 1299, delta: "±7" },
+			{ rank: 4, name: "claude-opus-4-7", provider: "Anthropic", score: 1298, delta: "±7" },
+			{ rank: 5, name: "claude-opus-4-6", provider: "Anthropic", score: 1297, delta: "±7" },
+			{ rank: 6, name: "muse-spark", provider: "Meta", score: 1294, delta: "±10" },
+			{ rank: 7, name: "claude-opus-4-8-thinking", provider: "Anthropic", score: 1290, delta: "±8" },
+			{ rank: 8, name: "gemini-3-pro", provider: "Google", score: 1289, delta: "±8" },
+			{ rank: 9, name: "gpt-5.5", provider: "OpenAI", score: 1285, delta: "±8" },
+			{ rank: 10, name: "gpt-5.4-high", provider: "OpenAI", score: 1283, delta: "±7" },
+		],
+	},
+	{
+		title: "Document",
+		icon: "material-symbols:article-outline-rounded",
+		rows: [
+			{ rank: 1, name: "claude-opus-4-6", provider: "Anthropic", score: 1507, delta: "±6" },
+			{ rank: 2, name: "claude-opus-4-6-thinking", provider: "Anthropic", score: 1507, delta: "±7" },
+			{ rank: 3, name: "claude-opus-4-7-thinking", provider: "Anthropic", score: 1498, delta: "±7" },
+			{ rank: 4, name: "claude-opus-4-7", provider: "Anthropic", score: 1496, delta: "±7" },
+			{ rank: 5, name: "claude-fable-5", provider: "Anthropic", score: 1486, delta: "±7" },
+			{ rank: 6, name: "claude-sonnet-4-6", provider: "Anthropic", score: 1487, delta: "±8" },
+			{ rank: 7, name: "gpt-5.5-high", provider: "OpenAI", score: 1485, delta: "±7" },
+			{ rank: 8, name: "gpt-5.5", provider: "OpenAI", score: 1483, delta: "±7" },
+			{ rank: 9, name: "gpt-5.4", provider: "OpenAI", score: 1474, delta: "±8" },
+			{ rank: 10, name: "claude-opus-4-8-thinking", provider: "Anthropic", score: 1473, delta: "±13" },
+		],
+	},
+	{
+		title: "Text-to-Image",
+		icon: "material-symbols:image-outline-rounded",
+		rows: [
+			{ rank: 1, name: "gpt-image-2 (medium)", provider: "OpenAI", score: 1387, delta: "±15" },
+			{ rank: 2, name: "reve 2.0", provider: "Runway", score: 1273, delta: "±17" },
+			{ rank: 3, name: "gemini-3.1-flash-image-preview", provider: "Google", score: 1270, delta: "±22" },
+			{ rank: 4, name: "mai-image-2.5", provider: "MiniMax", score: 1257, delta: "±17" },
+			{ rank: 5, name: "gemini-3.1-flash-lite-image", provider: "Google", score: 1251, delta: "±18" },
+			{ rank: 6, name: "gemini-3-pro-image-preview", provider: "Google", score: 1245, delta: "±14" },
+			{ rank: 7, name: "gpt-image-1.5-high-fidelity", provider: "OpenAI", score: 1241, delta: "±11" },
+			{ rank: 8, name: "gemini-3-pro-image-preview", provider: "Google", score: 1232, delta: "±13" },
+			{ rank: 9, name: "grok-imagine-image-quality", provider: "xAI", score: 1231, delta: "±12" },
+			{ rank: 10, name: "ideogram-4.0-quality", provider: "Runway", score: 1209, delta: "±10" },
+		],
+	},
+	{
+		title: "Image Edit",
+		icon: "material-symbols:wand-stars-outline-rounded",
+		filter: "Single Image Edit",
+		rows: [
+			{ rank: 1, name: "gpt-image-2 (medium)", provider: "OpenAI", score: 1464, delta: "±4" },
+			{ rank: 2, name: "mai-image-2.5", provider: "MiniMax", score: 1403, delta: "±6" },
+			{ rank: 3, name: "chatgpt-image-latest-high-fidelity", provider: "OpenAI", score: 1390, delta: "±8" },
+			{ rank: 4, name: "grok-imagine-image-quality", provider: "xAI", score: 1389, delta: "±8" },
+			{ rank: 5, name: "gemini-3-pro-image-preview", provider: "Google", score: 1388, delta: "±8" },
+			{ rank: 6, name: "gemini-3.1-flash-image-preview", provider: "Google", score: 1387, delta: "±6" },
+			{ rank: 7, name: "gemini-3-pro-image-preview", provider: "Google", score: 1385, delta: "±8" },
+			{ rank: 8, name: "gpt-image-1.5-high-fidelity", provider: "OpenAI", score: 1373, delta: "±5" },
+			{ rank: 9, name: "grok-imagine-image-quality", provider: "xAI", score: 1358, delta: "±8" },
+			{ rank: 10, name: "reve 2.0", provider: "Runway", score: 1357, delta: "±7" },
+		],
+	},
+	{
+		title: "Image-to-WebDev",
+		icon: "material-symbols:web-asset",
+		rows: [
+			{ rank: 1, name: "claude-opus-4-7-thinking", provider: "Anthropic", score: 1581, delta: "+15/-15" },
+			{ rank: 2, name: "claude-sonnet-4-6", provider: "Anthropic", score: 1567, delta: "+15/-15" },
+			{ rank: 3, name: "claude-opus-4-7", provider: "Anthropic", score: 1556, delta: "+12/-14" },
+			{ rank: 4, name: "claude-opus-4-6-thinking", provider: "Anthropic", score: 1538, delta: "+13/-13" },
+			{ rank: 5, name: "gpt-5.5-high (code-names)", provider: "OpenAI", score: 1537, delta: "+15/-15" },
+			{ rank: 6, name: "claude-opus-4-6", provider: "Anthropic", score: 1534, delta: "+13/-13" },
+			{ rank: 7, name: "kimi-k2.6", provider: "Kimi", score: 1522, delta: "+17/-17" },
+			{ rank: 8, name: "gpt-5.5-high (code-names)", provider: "OpenAI", score: 1519, delta: "+15/-15" },
+			{ rank: 9, name: "gemini-3.1-pro-preview", provider: "Google", score: 1490, delta: "+19/-12" },
+			{ rank: 10, name: "gpt-5.5 (code-names)", provider: "OpenAI", score: 1480, delta: "+15/-15" },
+		],
+	},
+	{
+		title: "Search",
+		icon: "material-symbols:travel-explore-rounded",
+		rows: [
+			{ rank: 1, name: "claude-opus-4-6-search", provider: "Anthropic", score: 1252, delta: "±10" },
+			{ rank: 2, name: "gpt-5.5-search", provider: "OpenAI", score: 1240, delta: "±12" },
+			{ rank: 3, name: "claude-fable-5", provider: "Anthropic", score: 1237, delta: "±11" },
+			{ rank: 4, name: "claude-opus-4-7", provider: "Anthropic", score: 1232, delta: "±12" },
+			{ rank: 5, name: "ernie-5.1", provider: "DeepSeek", score: 1226, delta: "±10" },
+			{ rank: 6, name: "claude-sonnet-4-6-search", provider: "Anthropic", score: 1218, delta: "±9" },
+			{ rank: 7, name: "gemini-3.1-pro-grounding", provider: "Google", score: 1214, delta: "±10" },
+			{ rank: 8, name: "gemini-3-pro-grounding", provider: "Google", score: 1207, delta: "±10" },
+			{ rank: 9, name: "grok-4.20-multi-agent-beta-0309", provider: "xAI", score: 1206, delta: "±9" },
+			{ rank: 10, name: "gpt-5.2-search", provider: "OpenAI", score: 1205, delta: "±10" },
+		],
+	},
+	{
+		title: "Text-to-Video",
+		icon: "material-symbols:movie-outline-rounded",
+		rows: [
+			{ rank: 1, name: "gemini-omni-flash", provider: "Google", score: 1527, delta: "±7" },
+			{ rank: 2, name: "dreamina-seedance-2.0-720p", provider: "ByteDance", score: 1468, delta: "±7" },
+			{ rank: 3, name: "happyhorse-1.0", provider: "Runway", score: 1437, delta: "±7" },
+			{ rank: 4, name: "veo-3.1-audio-1080p", provider: "Google", score: 1369, delta: "±11" },
+			{ rank: 5, name: "wan2.2-t2v", provider: "Google", score: 1368, delta: "±13" },
+			{ rank: 6, name: "veo-3.1-audio", provider: "Google", score: 1365, delta: "±14" },
+			{ rank: 7, name: "sora-2-pro", provider: "OpenAI", score: 1365, delta: "±8" },
+			{ rank: 8, name: "veo-3.1-fast-audio", provider: "Google", score: 1364, delta: "±11" },
+			{ rank: 9, name: "veo-3.1-fast-audio-1080p", provider: "Google", score: 1362, delta: "±11" },
+			{ rank: 10, name: "grok-imagine-video-720p", provider: "xAI", score: 1358, delta: "±8" },
+		],
+	},
+	{
+		title: "Image-to-Video",
+		icon: "material-symbols:slideshow-outline-rounded",
+		rows: [
+			{ rank: 1, name: "dreamina-seedance-2.0-720p", provider: "ByteDance", score: 1474, delta: "±10" },
+			{ rank: 2, name: "gemini-omni-flash", provider: "Google", score: 1469, delta: "±11" },
+			{ rank: 3, name: "grok-imagine-video-1.5-preview-720p", provider: "xAI", score: 1466, delta: "±5" },
+			{ rank: 4, name: "happyhorse-1.0", provider: "Runway", score: 1444, delta: "±10" },
+			{ rank: 5, name: "wan2.2-i2v", provider: "Google", score: 1424, delta: "±12" },
+			{ rank: 6, name: "grok-imagine-video-720p", provider: "xAI", score: 1422, delta: "±8" },
+			{ rank: 7, name: "veo-3.1-studio", provider: "Google", score: 1398, delta: "±11" },
+			{ rank: 8, name: "veo-3.1-audio-1080p", provider: "Google", score: 1391, delta: "±8" },
+			{ rank: 9, name: "veo-3.1-fast-audio", provider: "Google", score: 1385, delta: "±8" },
+			{ rank: 10, name: "grok-imagine-video-480p", provider: "xAI", score: 1384, delta: "±8" },
+		],
+	},
+	{
+		title: "Video Edit",
+		icon: "material-symbols:video-settings-rounded",
+		rows: [
+			{ rank: 1, name: "dreamina-seedance-2.0-720p", provider: "ByteDance", score: 1377, delta: "±12" },
+			{ rank: 2, name: "gemini-omni-flash", provider: "Google", score: 1347, delta: "±16" },
+			{ rank: 3, name: "happyhorse-1.0", provider: "Runway", score: 1308, delta: "±12" },
+			{ rank: 4, name: "grok-imagine-video", provider: "xAI", score: 1284, delta: "±11" },
+			{ rank: 5, name: "ling-03-pro", provider: "ByteDance", score: 1251, delta: "±12" },
+			{ rank: 6, name: "ling-03-pro", provider: "ByteDance", score: 1203, delta: "±8" },
+			{ rank: 7, name: "runway-gen4-aleph", provider: "Runway", score: 1194, delta: "±8" },
+		],
+	},
+];
+
+const textOverview = [
+	["claude-fable-5", 1, 1, 1, 1, 1, 1, 1, 1],
+	["claude-opus-4-6", 2, 2, 2, 3, 2, 2, 1, 2],
+	["claude-opus-4-7", 4, 3, 3, 4, 5, 5, 4, 4],
+	["claude-opus-4-6-thinking", 3, 5, 4, 1, 4, 3, 3, 4],
+	["claude-opus-4-7-thinking", 3, 3, 5, 2, 3, 7, 4, 3],
+	["muse-spark", 6, 15, 10, 11, 30, 13, 24, 31],
+	["gemini-3.1-pro-preview", 7, 10, 11, 15, 17, 6, 9, 11],
+	["gemini-3-pro", 8, 19, 18, 18, 17, 4, 14, 10],
+	["claude-opus-4-8-thinking", 9, 8, 6, 7, 6, 20, 5, 7],
+	["gpt-5.5-high", 10, 11, 12, 10, 7, 33, 11, 9],
+	["claude-opus-4-6", 11, 7, 7, 8, 11, 22, 8, 6],
+	["gpt-5.4-high", 12, 4, 8, 5, 9, 10, 12, 13],
+	["gemini-3.1-flash", 13, 15, 34, 34, 3, 30, 13, 33],
+	["gpt-4.20-bot-latest", 14, 27, 20, 32, 31, 29, 30, 24],
+];
+
+const overviewColumns = ["Overall", "专家评测", "高难提示词", "代码", "数学", "创意写作", "指令遵循", "长查询"];
+
+const getMax = (rows: ModelRow[]) => Math.max(...rows.map((row) => row.score), 1);
+const getWidth = (score: number, max: number) => `${Math.max(6, (score / max) * 100)}%`;
+---
+
+<MainGridLayout title="模型排名">
+	<div class="leaderboard-page space-y-5 pt-24 md:pt-28">
+		<section class="px-1 onload-animation">
+			<div>
+					<h1 class="text-2xl font-bold text-90 mb-2">排行榜总览 <span class="text-base font-medium text-50">（截止 2026年7月）</span></h1>
+					<p class="text-sm text-75 leading-6 max-w-4xl">
+						这里汇总主流 AI 模型在文本、图像、视觉理解等不同 Arena 中的表现，方便快速查看各类任务下的领先模型。
+						<a href="https://lmarena.ai/leaderboard" target="_blank" rel="noopener noreferrer" class="text-[var(--primary)] font-bold">查看官方榜单。</a>
+					</p>
+			</div>
+		</section>
+
+		<section class="onload-animation">
+			<div class="flex flex-wrap gap-3 text-xs text-75 mb-3">
+				<div class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-[oklch(0.93_0.06_85)]"></span>第一名</div>
+				<div class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-[oklch(0.88_0.03_65)]"></span>第二名</div>
+				<div class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-[oklch(0.82_0.05_55)]"></span>第三名</div>
+			</div>
+
+			<div class="card-base overflow-x-auto px-0 py-0">
+				<table class="min-w-[72rem] w-full border-collapse text-xs">
+					<thead>
+						<tr class="bg-[var(--btn-regular-bg)] text-50">
+							<th class="text-left px-3 py-3 font-bold w-56">模型</th>
+							{overviewColumns.map((column) => <th class="text-left px-3 py-3 font-bold">{column}</th>)}
+						</tr>
+					</thead>
+					<tbody>
+						{textOverview.map(([model, ...values]) => (
+							<tr class="border-t border-black/5 dark:border-white/10">
+								<td class="px-3 py-2 text-75 font-medium">{model}</td>
+								{values.map((value) => (
+									<td class:list={[
+										"px-3 py-2 text-75",
+										value === 1 && "bg-[oklch(0.93_0.06_85)] dark:bg-[oklch(0.35_0.07_85)]",
+										value === 2 && "bg-[oklch(0.88_0.03_65)] dark:bg-[oklch(0.30_0.05_65)]",
+										value === 3 && "bg-[oklch(0.82_0.05_55)] dark:bg-[oklch(0.28_0.05_55)]",
+									]}>{value}</td>
+								))}
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="card-base px-4 py-4 md:px-5 md:py-5 onload-animation">
+			<div class="flex items-center gap-2 mb-4">
+				<Icon name="material-symbols:settings-suggest-outline-rounded" class="text-lg text-75" />
+				<h2 class="font-bold text-90">Agent</h2>
+			</div>
+			<div class="space-y-2">
+				{agentRows.map((row) => {
+					const max = getMax(agentRows);
+					return (
+						<div class="grid grid-cols-[2rem_minmax(10rem,1fr)_2rem_minmax(12rem,1.6fr)_5rem] gap-3 items-center text-sm">
+							<div class="h-5 w-5 rounded bg-[var(--btn-regular-bg)] text-xs text-50 flex items-center justify-center">{row.rank}</div>
+							<div class="text-75 truncate">{row.name}</div>
+							<div class:list={["text-xs font-black text-center", providerTone[row.provider] ?? "text-75"]}>{providerMarks[row.provider] ?? "AI"}</div>
+							<div class="h-8 rounded-sm bg-[oklch(0.93_0.012_70)] dark:bg-black/25 overflow-hidden">
+								<div class="h-full bg-[oklch(0.61_0.17_145)]" style={`width: ${getWidth(row.score, max)}`}></div>
+							</div>
+							<div class="text-right text-xs leading-4">
+								<div class="font-bold text-[oklch(0.58_0.17_145)]">+ {row.score.toFixed(2)}%</div>
+								<div class="text-50">{row.delta}</div>
+							</div>
+						</div>
+					);
+				})}
+			</div>
+			<div class="text-center mt-5">
+				<a href="https://lmarena.ai/leaderboard" target="_blank" rel="noopener noreferrer" class="text-xs text-[var(--primary)] font-bold">查看全部</a>
+			</div>
+		</section>
+
+		<section class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+			{boards.map((board) => {
+				const max = getMax(board.rows);
+				return (
+					<article class="card-base px-4 py-4 md:px-5 md:py-5 onload-animation">
+						<div class="flex items-center justify-between gap-3 mb-4">
+							<div class="flex items-center gap-2 min-w-0">
+								<Icon name={board.icon} class="text-lg text-75 shrink-0" />
+								<h2 class="font-bold text-90 truncate">{board.title}</h2>
+							</div>
+							{board.filter && (
+								<div class="rounded-lg bg-[var(--btn-regular-bg)] px-2.5 py-1 text-xs text-75 flex items-center gap-1">
+									<span class="h-1.5 w-1.5 rounded-full bg-[oklch(0.63_0.17_35)]"></span>
+									{board.filter}
+									<Icon name="material-symbols:keyboard-arrow-down-rounded" class="text-base" />
+								</div>
+							)}
+						</div>
+
+						<div class="space-y-2">
+							{board.rows.map((row) => (
+								<div class="grid grid-cols-[2rem_minmax(8rem,1fr)_2rem_minmax(8rem,1.3fr)_4.6rem] gap-2 items-center text-xs">
+									<div class="h-5 w-5 rounded bg-[var(--btn-regular-bg)] text-[0.65rem] text-50 flex items-center justify-center">{row.rank}</div>
+									<div class="text-75 truncate">{row.name}</div>
+									<div class:list={["text-[0.65rem] font-black text-center", providerTone[row.provider] ?? "text-75"]}>{providerMarks[row.provider] ?? "AI"}</div>
+									<div class="h-6 rounded-sm bg-[oklch(0.93_0.012_70)] dark:bg-black/25 overflow-hidden">
+										<div class="h-full bg-[oklch(0.61_0.17_145)]" style={`width: ${getWidth(row.score, max)}`}></div>
+									</div>
+									<div class="text-right leading-3">
+										<div class="font-bold text-75">{row.score}</div>
+										<div class="text-50">{row.delta}</div>
+									</div>
+								</div>
+							))}
+						</div>
+						<div class="text-center mt-5">
+							<a href="https://lmarena.ai/leaderboard" target="_blank" rel="noopener noreferrer" class="text-xs text-[var(--primary)] font-bold">查看全部</a>
+						</div>
+					</article>
+				);
+			})}
+		</section>
+
+	</div>
+</MainGridLayout>

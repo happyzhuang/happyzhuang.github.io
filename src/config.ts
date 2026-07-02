@@ -9,7 +9,7 @@ import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
 	title: "LLM, Hello!",
-	subtitle: "写给每个人的 AI 技术博客",
+	subtitle: "面向中文开发者的 LLM 学习与实战入口",
 	lang: "zh_CN", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
 	themeColor: {
 		hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
@@ -51,27 +51,26 @@ export const navBarConfig: NavBarConfig = {
 			url: "/map/",
 		},
 		{
+			name: "模型排名",
+			url: "/models/",
+		},
+		{
 			name: "Prompt",
 			url: "/prompts/",
 		},
 		{
-			name: "项目",
+			name: "实战案例",
 			url: "/projects/",
 		},
 		LinkPreset.Archive,
 		LinkPreset.About,
-		{
-			name: "GitHub",
-			url: "https://github.com/happyzhuang", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
-		},
 	],
 };
 
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/touxiang.jpeg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Happy Zhuang",
-	bio: "探索 AI 的奇妙世界，记录技术成长的点滴历程",
+	bio: "记录大模型学习、应用开发与项目实践",
 	links: [
 		{
 			name: "GitHub",
