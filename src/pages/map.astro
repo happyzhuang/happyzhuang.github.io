@@ -1,6 +1,80 @@
 ---
 import { Icon } from "astro-icon/components";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { url } from "@utils/url-utils";
+
+const quickPaths = [
+	{
+		title: "零基础入门",
+		description: "先理解 LLM、Prompt、Token 和主流模型，再进入 API 调用。",
+		steps: ["理解 LLM", "写好 Prompt", "估算 Token", "选择模型"],
+		href: "/prompts/",
+		icon: "material-symbols:menu-book-outline-rounded",
+	},
+	{
+		title: "应用开发路线",
+		description: "从一次 API 调用开始，逐步做出 RAG、Agent 和可部署项目。",
+		steps: ["API 调用", "结构化输出", "RAG 知识库", "Agent 工作流"],
+		href: "/labs/",
+		icon: "material-symbols:terminal-rounded",
+	},
+	{
+		title: "项目实战路线",
+		description: "把学习节点落到可复现案例中，形成作品和工程经验。",
+		steps: ["Hello LLM", "个人知识库", "Agent 样板", "部署上线"],
+		href: "/projects/",
+		icon: "material-symbols:construction-rounded",
+	},
+];
+
+const siteLinks = [
+	{
+		title: "Prompt 配方",
+		description: "复制可用模板，练习任务拆解与输出约束。",
+		href: "/prompts/",
+		icon: "material-symbols:edit-note-outline-rounded",
+	},
+	{
+		title: "实验室",
+		description: "用交互工具观察 Token、Prompt、RAG 和 Agent 流程。",
+		href: "/labs/",
+		icon: "material-symbols:labs-outline-rounded",
+	},
+	{
+		title: "模型排名",
+		description: "按任务类型查看主流模型表现，辅助选型。",
+		href: "/models/",
+		icon: "material-symbols:hub-outline",
+	},
+	{
+		title: "实战案例",
+		description: "把路线节点沉淀成可复现的项目样板。",
+		href: "/projects/",
+		icon: "material-symbols:construction-rounded",
+	},
+];
+
+const checkpoints = [
+	["第 1 周", "能解释 LLM、Token、上下文窗口和 Prompt 的基本结构。"],
+	["第 2 周", "能完成一次模型 API 调用，并处理流式输出、错误和成本。"],
+	["第 3 周", "能搭建一个最小 RAG 流程，理解切块、召回、重排和引用。"],
+	["第 4 周", "能设计一个小型 Agent 工作流，并给出工具调用与失败恢复方案。"],
+];
+
+const lessonLinks: Record<string, string> = {
+	"LLM 与生成式 AI": "/posts/2026_07/llm-and-generative-ai/",
+	"模型、参数与上下文窗口": "/posts/2026_07/model-parameters-context-window/",
+	"token 与成本": "/posts/2026_07/token-and-cost/",
+	"闭源模型与开源模型": "/posts/2026_07/closed-vs-open-models/",
+	"ChatGPT / Claude / Gemini": "/posts/2026_07/chatgpt-claude-gemini/",
+	"Ollama 本地模型": "/posts/2026_07/ollama-local-models/",
+	"API Key 与调用额度": "/posts/2026_07/api-key-and-quota/",
+	"隐私与安全边界": "/posts/2026_07/privacy-and-security/",
+	"任务与角色": "/posts/2026_07/prompt-task-and-role/",
+	"背景与约束": "/posts/2026_07/prompt-context-and-constraints/",
+	"结构化输出": "/posts/2026_07/structured-output/",
+	"few-shot 示例": "/posts/2026_07/few-shot-examples/",
+};
 
 const roadmap = [
 	{
@@ -160,16 +234,94 @@ const roadmap = [
 				<div class="absolute right-8 top-6 h-40 w-40 rounded-full bg-[oklch(0.74_0.14_205)] blur-3xl opacity-20"></div>
 				<div class="absolute left-10 bottom-4 h-32 w-32 rounded-full bg-[oklch(0.76_0.14_35)] blur-3xl opacity-15"></div>
 			</div>
-			<div class="relative max-w-4xl">
+			<div class="relative grid grid-cols-1 xl:grid-cols-[1fr_22rem] gap-8 items-end">
+				<div class="max-w-4xl">
 				<h1 class="text-3xl md:text-4xl font-bold text-90 mb-4">LLM 学习地图</h1>
 				<p class="text-75 text-lg leading-8">
-					这不是一张静态课程表，而是一条会持续生长的学习路线。每个节点未来都可以扩展成教程、实验、文章或项目日志。
+					这不是一张静态课程表，而是一条会持续生长的学习路线。它把基础概念、Prompt、API、RAG、Agent、模型评测和项目部署串起来，并连接到站内实验、模板和案例。
 				</p>
+				<div class="mt-6 flex flex-col sm:flex-row gap-3">
+					<a href="#roadmap" class="btn-regular rounded-xl h-12 px-5 font-bold justify-start sm:justify-center">
+						<Icon name="material-symbols:map-outline-rounded" class="text-2xl mr-2" />
+						查看完整路线
+					</a>
+					<a href={url("/labs/")} class="btn-plain rounded-xl h-12 px-5 font-bold justify-start sm:justify-center bg-white/55 dark:bg-black/20">
+						<Icon name="material-symbols:labs-outline-rounded" class="text-2xl mr-2" />
+						进入实验室
+					</a>
+				</div>
+			</div>
+				<div class="rounded-2xl bg-white/65 dark:bg-black/20 backdrop-blur border border-white/45 dark:border-white/10 px-5 py-5">
+					<div class="text-sm font-bold text-90 mb-3">今天可以先完成</div>
+					<div class="space-y-3">
+						{["选一条路线", "复制一个 Prompt", "跑一次实验", "记录一个项目想法"].map((item, index) => (
+							<div class="flex items-center gap-3">
+								<div class="grid size-8 place-items-center rounded-xl bg-[var(--btn-regular-bg)] text-sm font-bold text-[var(--primary)]">{index + 1}</div>
+								<div class="text-sm text-75">{item}</div>
+							</div>
+						))}
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="card-base px-4 py-6 md:px-8 md:py-8 mb-4 onload-animation">
+	<section class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
+		{quickPaths.map((path) => (
+			<a href={url(path.href)} class="group card-base px-6 py-6 onload-animation hover:bg-[var(--btn-card-bg-hover)] active:bg-[var(--btn-card-bg-active)]">
+				<div class="flex items-start justify-between gap-4 mb-5">
+					<div class="grid size-12 place-items-center rounded-2xl bg-[var(--btn-regular-bg)] text-[var(--primary)]">
+						<Icon name={path.icon} class="text-3xl" />
+					</div>
+					<Icon name="material-symbols:chevron-right-rounded" class="text-[var(--primary)] text-3xl transition group-hover:translate-x-1" />
+				</div>
+				<h2 class="text-2xl font-bold text-90 mb-3">{path.title}</h2>
+				<p class="text-75 leading-7 mb-5">{path.description}</p>
+				<div class="grid grid-cols-2 gap-2">
+					{path.steps.map((step) => (
+						<div class="rounded-xl bg-[var(--btn-regular-bg)] px-3 py-2 text-sm text-75">{step}</div>
+					))}
+				</div>
+			</a>
+		))}
+	</section>
+
+	<section class="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-4 mb-4">
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<div class="flex items-center gap-3 mb-5">
+				<Icon name="material-symbols:flag-outline-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">4 周学习检查点</h2>
+			</div>
+			<div class="space-y-3">
+				{checkpoints.map(([week, description]) => (
+					<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-4">
+						<div class="font-bold text-90 mb-1">{week}</div>
+						<p class="text-sm text-75 leading-6">{description}</p>
+					</div>
+				))}
+			</div>
+		</article>
+
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<div class="flex items-center gap-3 mb-5">
+				<Icon name="material-symbols:hub-outline" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">学习地图连接这些栏目</h2>
+			</div>
+			<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+				{siteLinks.map((item) => (
+					<a href={url(item.href)} class="group rounded-2xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] transition px-4 py-4">
+						<div class="flex items-center gap-3 mb-2">
+							<Icon name={item.icon} class="text-[var(--primary)] text-2xl" />
+							<div class="font-bold text-90">{item.title}</div>
+						</div>
+						<p class="text-sm text-75 leading-6">{item.description}</p>
+					</a>
+				))}
+			</div>
+		</article>
+	</section>
+
+	<section id="roadmap" class="card-base px-4 py-6 md:px-8 md:py-8 mb-4 onload-animation scroll-mt-24">
 		<div class="relative learning-road">
 			<svg class="absolute left-5 top-6 h-[calc(100%-3rem)] w-20 md:left-1/2 md:-translate-x-1/2 md:w-28 pointer-events-none" viewBox="0 0 120 1200" preserveAspectRatio="none" aria-hidden="true">
 				<path d="M60 0 C 10 110, 110 210, 60 320 S 10 530, 60 650 S 110 860, 60 980 S 10 1120, 60 1200" fill="none" stroke="var(--line-color)" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 14" />
@@ -218,17 +370,33 @@ const roadmap = [
 											<section class="rounded-2xl bg-[var(--card-bg)] px-4 py-4">
 												<h3 class="font-bold text-90 mb-3">{module.title}</h3>
 												<div class="space-y-2">
-													{module.items.map((item) => (
-														<div class="group rounded-xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] transition px-3 py-2.5">
-															<div class="flex items-start gap-2">
-																<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${stage.accent}`}></span>
-																<div>
-																	<div class="text-sm font-medium text-90 leading-5">{item}</div>
-																	<div class="text-xs text-50 mt-1 opacity-0 group-hover:opacity-100 transition">教程规划中</div>
+													{module.items.map((item) => {
+														const lessonHref = lessonLinks[item];
+														return lessonHref ? (
+															<a href={url(lessonHref)} class="group block rounded-xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] active:bg-[var(--btn-regular-bg-active)] transition px-3 py-2.5">
+																<div class="flex items-start gap-2">
+																	<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${stage.accent}`}></span>
+																	<div class="min-w-0 flex-1">
+																		<div class="text-sm font-medium text-90 leading-5">{item}</div>
+																		<div class="flex items-center gap-1 text-xs text-[var(--primary)] mt-1 opacity-80 group-hover:opacity-100">
+																			<span>查看教程</span>
+																			<Icon name="material-symbols:chevron-right-rounded" class="text-base transition group-hover:translate-x-0.5" />
+																		</div>
+																	</div>
+																</div>
+															</a>
+														) : (
+															<div class="group rounded-xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] transition px-3 py-2.5">
+																<div class="flex items-start gap-2">
+																	<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${stage.accent}`}></span>
+																	<div>
+																		<div class="text-sm font-medium text-90 leading-5">{item}</div>
+																		<div class="text-xs text-50 mt-1 opacity-0 group-hover:opacity-100 transition">教程规划中</div>
+																	</div>
 																</div>
 															</div>
-														</div>
-													))}
+														);
+													})}
 												</div>
 											</section>
 										))}
