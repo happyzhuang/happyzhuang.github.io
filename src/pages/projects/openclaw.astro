@@ -1,0 +1,74 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { url } from "@utils/url-utils";
+
+const fullArticleUrl = "/posts/2026_07/openclaw-local-agent-practice/";
+const outcomes = ["理解 OpenClaw 的本地 Agent 定位", "知道安装和初始化关注点", "能配置模型服务和工作区", "能执行第一个安全任务", "能建立权限和日志意识"];
+const chapters = [
+	["理解定位", "OpenClaw 不是普通聊天工具，而是本地 Agent 运行环境。"],
+	["准备环境", "梳理 Node.js、模型 API、CLI 和配置目录。"],
+	["初始化配置", "检查模型、工作区和工具权限。"],
+	["第一个任务", "在测试目录执行一个安全的小任务。"],
+	["观察日志", "查看工具调用、输入输出和执行轨迹。"],
+	["权限边界", "逐步扩大权限，避免误删文件和泄露密钥。"],
+];
+const links = [
+	["OpenClaw 系列（一）", "/posts/2026_03/openclaw-intro/"],
+	["OpenClaw 系列（二）", "/posts/2026_03/openclaw-deploy/"],
+	["OpenClaw 系列（三）", "/posts/2026_03/openclaw-advanced/"],
+];
+---
+
+<MainGridLayout title="OpenClaw 本地 Agent 实战">
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+			<div class="max-w-3xl">
+				<div class="flex items-center gap-3 mb-4">
+					<Icon name="material-symbols:construction-rounded" class="text-[var(--primary)] text-4xl" />
+					<div>
+						<div class="text-sm font-bold text-[var(--primary)] mb-1">实战案例 04</div>
+						<h1 class="text-3xl md:text-4xl font-bold text-90">OpenClaw 本地 Agent 实战</h1>
+					</div>
+				</div>
+				<p class="text-75 text-lg leading-8">
+					替换原来的模型成本对比案例，用 OpenClaw 串起本地 Agent、工具调用、模型配置、权限边界和执行日志。
+				</p>
+			</div>
+			<a href={url(fullArticleUrl)} class="btn-regular rounded-xl h-12 px-5 font-bold justify-start sm:justify-center">阅读完整教程<Icon name="material-symbols:chevron-right-rounded" class="text-2xl ml-1" /></a>
+		</div>
+	</section>
+
+	<section class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-4 mb-4">
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<h2 class="text-2xl font-bold text-90 mb-5">学完你会得到</h2>
+			<div class="space-y-3">
+				{outcomes.map((item, index) => (
+					<div class="flex gap-3 rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-3">
+						<div class="grid size-7 shrink-0 place-items-center rounded-lg bg-[var(--card-bg)] text-sm font-bold text-[var(--primary)]">{index + 1}</div>
+						<div class="text-75 leading-7">{item}</div>
+					</div>
+				))}
+			</div>
+		</article>
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<h2 class="text-2xl font-bold text-90 mb-5">课程目录</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+				{chapters.map(([title, description], index) => (
+					<a href={url(fullArticleUrl)} class="group rounded-2xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] px-4 py-4 transition">
+						<div class="text-sm font-bold text-[var(--primary)] mb-2">第 {index + 1} 节</div>
+						<h3 class="font-bold text-90 mb-2">{title}</h3>
+						<p class="text-sm text-75 leading-6">{description}</p>
+					</a>
+				))}
+			</div>
+		</article>
+	</section>
+
+	<section class="card-base px-6 py-6 md:px-8 mb-4 onload-animation">
+		<h2 class="text-2xl font-bold text-90 mb-4">关联 OpenClaw 系列</h2>
+		<div class="flex flex-wrap gap-2">
+			{links.map(([title, href]) => <a href={url(href)} class="btn-plain rounded-xl h-10 px-4 font-bold">{title}</a>)}
+		</div>
+	</section>
+</MainGridLayout>

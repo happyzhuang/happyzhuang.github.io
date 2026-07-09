@@ -1,0 +1,74 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { url } from "@utils/url-utils";
+
+const fullArticleUrl = "/posts/2026_07/agent-workflow-template/";
+const outcomes = ["能解释 Agent 的执行循环", "能定义一个最小工具", "能让模型先规划再执行", "能记录执行日志", "能设置最大步数和失败恢复"];
+const chapters = [
+	["定义目标", "把用户目标写成任务、限制和成功标准。"],
+	["定义工具", "设计小而清晰的工具接口。"],
+	["任务规划", "让模型先拆解任务，不直接执行。"],
+	["执行循环", "选择工具、执行工具、观察结果、继续判断。"],
+	["执行日志", "记录每一步，保证 Agent 可观察。"],
+	["失败恢复", "处理重复调用、工具失败、步数过多和权限风险。"],
+];
+const links = [
+	["Agent 工作流演示", "/labs/"],
+	["任务与角色", "/posts/2026_07/prompt-task-and-role/"],
+	["OpenClaw 本地 Agent 实战", "/projects/openclaw/"],
+];
+---
+
+<MainGridLayout title="Agent 工程样板">
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+			<div class="max-w-3xl">
+				<div class="flex items-center gap-3 mb-4">
+					<Icon name="material-symbols:robot-2-outline-rounded" class="text-[var(--primary)] text-4xl" />
+					<div>
+						<div class="text-sm font-bold text-[var(--primary)] mb-1">实战案例 03</div>
+						<h1 class="text-3xl md:text-4xl font-bold text-90">Agent 工程样板</h1>
+					</div>
+				</div>
+				<p class="text-75 text-lg leading-8">
+					搭一个可控的 Agent 最小循环，学习任务规划、工具调用、观察日志和失败恢复。
+				</p>
+			</div>
+			<a href={url(fullArticleUrl)} class="btn-regular rounded-xl h-12 px-5 font-bold justify-start sm:justify-center">阅读完整教程<Icon name="material-symbols:chevron-right-rounded" class="text-2xl ml-1" /></a>
+		</div>
+	</section>
+
+	<section class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-4 mb-4">
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<h2 class="text-2xl font-bold text-90 mb-5">学完你会得到</h2>
+			<div class="space-y-3">
+				{outcomes.map((item, index) => (
+					<div class="flex gap-3 rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-3">
+						<div class="grid size-7 shrink-0 place-items-center rounded-lg bg-[var(--card-bg)] text-sm font-bold text-[var(--primary)]">{index + 1}</div>
+						<div class="text-75 leading-7">{item}</div>
+					</div>
+				))}
+			</div>
+		</article>
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<h2 class="text-2xl font-bold text-90 mb-5">课程目录</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+				{chapters.map(([title, description], index) => (
+					<a href={url(fullArticleUrl)} class="group rounded-2xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] px-4 py-4 transition">
+						<div class="text-sm font-bold text-[var(--primary)] mb-2">第 {index + 1} 节</div>
+						<h3 class="font-bold text-90 mb-2">{title}</h3>
+						<p class="text-sm text-75 leading-6">{description}</p>
+					</a>
+				))}
+			</div>
+		</article>
+	</section>
+
+	<section class="card-base px-6 py-6 md:px-8 mb-4 onload-animation">
+		<h2 class="text-2xl font-bold text-90 mb-4">关联内容</h2>
+		<div class="flex flex-wrap gap-2">
+			{links.map(([title, href]) => <a href={url(href)} class="btn-plain rounded-xl h-10 px-4 font-bold">{title}</a>)}
+		</div>
+	</section>
+</MainGridLayout>

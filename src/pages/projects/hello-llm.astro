@@ -1,0 +1,149 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { url } from "@utils/url-utils";
+
+const fullArticleUrl = "/posts/2026_07/hello-llm-api/";
+
+const outcomes = [
+	"知道一次模型 API 请求由哪些部分组成",
+	"能安全保存 API Key，不把密钥提交到仓库",
+	"能完成一次非流式文本生成调用",
+	"理解流式输出的基本工作方式",
+	"能识别并处理常见 API 错误",
+	"能估算一次调用的大致 token 成本",
+];
+
+const chapters = [
+	{
+		title: "准备 API Key",
+		description: "理解 API Key、环境变量、额度和 .gitignore 的基本安全习惯。",
+	},
+	{
+		title: "理解一次请求",
+		description: "拆解 model、messages、temperature、max_tokens 等核心字段。",
+	},
+	{
+		title: "最小调用脚本",
+		description: "用最少代码发起一次模型请求，并打印模型回答。",
+	},
+	{
+		title: "流式输出",
+		description: "理解为什么聊天产品会一个字一个字出现，以及如何接收流式响应。",
+	},
+	{
+		title: "常见错误处理",
+		description: "处理 401、429、400、413、500 等典型错误状态。",
+	},
+	{
+		title: "成本估算与封装",
+		description: "记录 usage，估算 token 成本，并抽出可复用的 callModel 函数。",
+	},
+];
+
+const prerequisites = ["会使用命令行", "了解环境变量", "知道 API Key 是调用凭证", "能读懂基础 TypeScript/JavaScript"];
+const links = [
+	["API Key 与调用额度", "/posts/2026_07/api-key-and-quota/"],
+	["token 与成本", "/posts/2026_07/token-and-cost/"],
+	["实验室：Token 成本估算器", "/labs/"],
+	["Prompt 配方", "/prompts/"],
+];
+---
+
+<MainGridLayout title="Hello LLM：第一次调用模型 API">
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+			<div class="max-w-3xl">
+				<div class="flex items-center gap-3 mb-4">
+					<Icon name="material-symbols:terminal-rounded" class="text-[var(--primary)] text-4xl" />
+					<div>
+						<div class="text-sm font-bold text-[var(--primary)] mb-1">实战案例 01</div>
+						<h1 class="text-3xl md:text-4xl font-bold text-90">Hello LLM：第一次调用模型 API</h1>
+					</div>
+				</div>
+				<p class="text-75 text-lg leading-8">
+					这节课是整个实战案例体系的起点。它不追求复杂框架，而是先完成一次最小可用的大模型 API 调用，并把后续 RAG、Agent、模型切换都会复用的工程习惯建立起来。
+				</p>
+			</div>
+			<a href={url(fullArticleUrl)} class="btn-regular rounded-xl h-12 px-5 font-bold justify-start sm:justify-center">
+				阅读完整教程
+				<Icon name="material-symbols:chevron-right-rounded" class="text-2xl ml-1" />
+			</a>
+		</div>
+	</section>
+
+	<section class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-4 mb-4">
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<div class="flex items-center gap-3 mb-5">
+				<Icon name="material-symbols:checklist-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">学完你会得到</h2>
+			</div>
+			<div class="space-y-3">
+				{outcomes.map((item, index) => (
+					<div class="flex gap-3 rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-3">
+						<div class="grid size-7 shrink-0 place-items-center rounded-lg bg-[var(--card-bg)] text-sm font-bold text-[var(--primary)]">{index + 1}</div>
+						<div class="text-75 leading-7">{item}</div>
+					</div>
+				))}
+			</div>
+		</article>
+
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<div class="flex items-center gap-3 mb-5">
+				<Icon name="material-symbols:format-list-bulleted-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">课程目录</h2>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+				{chapters.map((chapter, index) => (
+					<a href={url(fullArticleUrl)} class="group rounded-2xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] active:bg-[var(--btn-regular-bg-active)] transition px-4 py-4">
+						<div class="flex items-center justify-between gap-3 mb-2">
+							<div class="text-sm font-bold text-[var(--primary)]">第 {index + 1} 节</div>
+							<Icon name="material-symbols:chevron-right-rounded" class="text-[var(--primary)] text-2xl transition group-hover:translate-x-1" />
+						</div>
+						<h3 class="font-bold text-90 mb-2">{chapter.title}</h3>
+						<p class="text-sm text-75 leading-6">{chapter.description}</p>
+					</a>
+				))}
+			</div>
+		</article>
+	</section>
+
+	<section class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+		<article class="card-base px-6 py-6 onload-animation">
+			<div class="flex items-center gap-3 mb-4">
+				<Icon name="material-symbols:school-outline-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">适合谁</h2>
+			</div>
+			<p class="text-75 leading-7">
+				适合刚从网页聊天转向 API 开发的学习者，也适合想给后续 RAG、Agent 项目打工程基础的开发者。
+			</p>
+		</article>
+
+		<article class="card-base px-6 py-6 onload-animation">
+			<div class="flex items-center gap-3 mb-4">
+				<Icon name="material-symbols:fact-check-outline-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">学习前准备</h2>
+			</div>
+			<div class="flex flex-wrap gap-2">
+				{prerequisites.map((item) => (
+					<span class="rounded-lg bg-[var(--btn-regular-bg)] px-3 py-2 text-sm text-75">{item}</span>
+				))}
+			</div>
+		</article>
+
+		<article class="card-base px-6 py-6 onload-animation">
+			<div class="flex items-center gap-3 mb-4">
+				<Icon name="material-symbols:link-rounded" class="text-[var(--primary)] text-3xl" />
+				<h2 class="text-2xl font-bold text-90">关联内容</h2>
+			</div>
+			<div class="space-y-2">
+				{links.map(([title, href]) => (
+					<a href={url(href)} class="group flex items-center justify-between gap-3 rounded-xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] px-3 py-2.5 transition">
+						<span class="text-sm text-75">{title}</span>
+						<Icon name="material-symbols:chevron-right-rounded" class="text-[var(--primary)] text-xl transition group-hover:translate-x-0.5" />
+					</a>
+				))}
+			</div>
+		</article>
+	</section>
+</MainGridLayout>

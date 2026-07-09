@@ -1,39 +1,44 @@
 ---
 import { Icon } from "astro-icon/components";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { url } from "@utils/url-utils";
 
 const cases = [
 	{
 		title: "Hello LLM：第一次调用模型 API",
-		status: "准备中",
+		status: "已上线",
 		level: "入门",
 		description: "用最少代码完成一次文本生成、流式输出和错误处理，建立后续案例的工程模板。",
 		stack: ["API Key", "HTTP Client", "Streaming", "Env"],
 		deliverables: ["最小可运行脚本", "环境变量示例", "常见错误清单"],
+		href: "/projects/hello-llm/",
 	},
 	{
 		title: "个人 RAG 知识库",
-		status: "计划中",
+		status: "已上线",
 		level: "实战",
 		description: "从文档切块、向量化、召回、重排到答案引用，记录一个可复现知识库助手的完整链路。",
 		stack: ["Embedding", "Vector DB", "Rerank", "Citation"],
 		deliverables: ["架构图", "核心代码", "评测样例"],
+		href: "/projects/rag-knowledge-base/",
 	},
 	{
 		title: "Agent 工程样板",
-		status: "计划中",
+		status: "已上线",
 		level: "进阶",
 		description: "沉淀一个小型 Agent 项目的任务拆解、工具调用、执行日志和失败恢复实践。",
 		stack: ["Tool Use", "Planning", "Memory", "Observability"],
 		deliverables: ["工具协议", "执行轨迹", "失败恢复策略"],
+		href: "/projects/agent-workflow/",
 	},
 	{
-		title: "模型切换与成本对比",
-		status: "计划中",
-		level: "工程",
-		description: "把同一任务接到不同模型 API 上，比较输出质量、延迟、成本和接入复杂度。",
-		stack: ["OpenAI Compatible", "DeepSeek", "Qwen", "Cost"],
-		deliverables: ["统一调用封装", "对比表", "选型建议"],
+		title: "OpenClaw 本地 Agent 实战",
+		status: "已上线",
+		level: "进阶",
+		description: "用 OpenClaw 串起本地 Agent、模型配置、工具调用、权限边界和执行日志。",
+		stack: ["OpenClaw", "Local Agent", "Gateway", "Safety"],
+		deliverables: ["安装路线", "首个任务", "权限清单"],
+		href: "/projects/openclaw/",
 	},
 ];
 ---
@@ -73,6 +78,12 @@ const cases = [
 						))}
 					</div>
 				</div>
+				{item.href && (
+					<a href={url(item.href)} class="btn-regular rounded-xl h-11 px-4 font-bold mt-4 justify-start sm:justify-center">
+						查看案例
+						<Icon name="material-symbols:chevron-right-rounded" class="text-2xl ml-1" />
+					</a>
+				)}
 			</article>
 		))}
 	</section>

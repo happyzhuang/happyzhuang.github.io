@@ -1,0 +1,74 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { url } from "@utils/url-utils";
+
+const fullArticleUrl = "/posts/2026_07/personal-rag-knowledge-base/";
+const outcomes = ["能解释 RAG 的最小链路", "能把 Markdown 文档切成片段", "理解 Embedding 和向量检索", "能生成带引用回答", "能排查常见 RAG 失败"];
+const chapters = [
+	["准备文档", "从 Markdown 开始，避免一上来处理复杂 PDF 和网页。"],
+	["文档切块", "理解 chunk size、overlap 和语义边界。"],
+	["生成 Embedding", "把文本转换成可检索的向量表示。"],
+	["检索相关片段", "根据用户问题召回最相关资料。"],
+	["带引用回答", "要求模型只基于资料回答并标注来源。"],
+	["失败排查", "从切块、召回、重排、Prompt 四层定位问题。"],
+];
+const links = [
+	["RAG 流程演示", "/labs/"],
+	["RAG 最小流程", "/posts/2025_12/rag-intro/"],
+	["Prompt 配方库", "/prompts/"],
+];
+---
+
+<MainGridLayout title="个人 RAG 知识库">
+	<section class="card-base px-6 py-7 md:px-9 md:py-9 mb-4 onload-animation">
+		<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+			<div class="max-w-3xl">
+				<div class="flex items-center gap-3 mb-4">
+					<Icon name="material-symbols:account-tree-outline-rounded" class="text-[var(--primary)] text-4xl" />
+					<div>
+						<div class="text-sm font-bold text-[var(--primary)] mb-1">实战案例 02</div>
+						<h1 class="text-3xl md:text-4xl font-bold text-90">个人 RAG 知识库</h1>
+					</div>
+				</div>
+				<p class="text-75 text-lg leading-8">
+					从一份 Markdown 文档开始，做出一个能检索资料、生成回答、标注引用的最小知识库助手。
+				</p>
+			</div>
+			<a href={url(fullArticleUrl)} class="btn-regular rounded-xl h-12 px-5 font-bold justify-start sm:justify-center">阅读完整教程<Icon name="material-symbols:chevron-right-rounded" class="text-2xl ml-1" /></a>
+		</div>
+	</section>
+
+	<section class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-4 mb-4">
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<h2 class="text-2xl font-bold text-90 mb-5">学完你会得到</h2>
+			<div class="space-y-3">
+				{outcomes.map((item, index) => (
+					<div class="flex gap-3 rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-3">
+						<div class="grid size-7 shrink-0 place-items-center rounded-lg bg-[var(--card-bg)] text-sm font-bold text-[var(--primary)]">{index + 1}</div>
+						<div class="text-75 leading-7">{item}</div>
+					</div>
+				))}
+			</div>
+		</article>
+		<article class="card-base px-6 py-6 md:px-8 onload-animation">
+			<h2 class="text-2xl font-bold text-90 mb-5">课程目录</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+				{chapters.map(([title, description], index) => (
+					<a href={url(fullArticleUrl)} class="group rounded-2xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] px-4 py-4 transition">
+						<div class="text-sm font-bold text-[var(--primary)] mb-2">第 {index + 1} 节</div>
+						<h3 class="font-bold text-90 mb-2">{title}</h3>
+						<p class="text-sm text-75 leading-6">{description}</p>
+					</a>
+				))}
+			</div>
+		</article>
+	</section>
+
+	<section class="card-base px-6 py-6 md:px-8 mb-4 onload-animation">
+		<h2 class="text-2xl font-bold text-90 mb-4">关联内容</h2>
+		<div class="flex flex-wrap gap-2">
+			{links.map(([title, href]) => <a href={url(href)} class="btn-plain rounded-xl h-10 px-4 font-bold">{title}</a>)}
+		</div>
+	</section>
+</MainGridLayout>
