@@ -1,0 +1,11 @@
+---
+import { getCollection } from "astro:content";
+import { getPostUrlBySlug, url } from "@utils/url-utils";
+import type { MarkdownHeading } from "astro";
+interface Props { headings: MarkdownHeading[]; }
+const { headings } = Astro.props;
+const posts = await getCollection("posts", ({data}) => data.draft !== true);
+const current = posts.find(p => getPostUrlBySlug(p.slug) === Astro.url.pathname);
+const related = posts.filter(p => p.data.category === current?.data.category).sort((a,b) => a.data.title.localeCompare(b.data.title,"zh-CN"));
+---
+<aside class="course-sidebar" data-pagefind-ignore><a class="sidebar-back" href={url("/map/")}>← 全部学习路线</a><details open><summary>{current?.data.category || "教程目录"}</summary><nav aria-label="同专题教程">{related.map(p => <a href={getPostUrlBySlug(p.slug)} aria-current={p.slug === current?.slug ? "page" : undefined}>{p.data.title}</a>)}</nav></details>{headings.length > 0 && <details class="lesson-outline"><summary>本页目录</summary><nav aria-label="本页目录">{headings.filter(h => h.depth === 2).map(h => <a href={`#${h.slug}`}>{h.text}</a>)}</nav></details>}<div class="sidebar-help">边学边练<a href={url("/labs/")}>打开交互实验 ↗</a><a href={url("/prompts/")}>查看 Prompt 配方 ↗</a></div></aside>

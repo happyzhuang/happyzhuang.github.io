@@ -1,0 +1,27 @@
+---
+import { getSortedPosts } from "@utils/content-utils";
+import { getPostUrlBySlug, url } from "@utils/url-utils";
+import TutorialSearch from "./TutorialSearch.svelte";
+import type { CollectionEntry } from "astro:content";
+interface Props { latestPosts: CollectionEntry<"posts">[]; }
+const { latestPosts } = Astro.props;
+const posts = await getSortedPosts();
+const items = posts.map(p => ({ title:p.data.title, description:p.data.description || "", category:p.data.category || "教程", href:getPostUrlBySlug(p.slug) }));
+const courses = [
+ ["01","认识大模型","从这里开始","理解模型、Token 与上下文，建立你的第一套 AI 知识框架。",[["LLM 与生成式 AI","llm-and-generative-ai"],["模型与上下文窗口","model-parameters-context-window"],["Token 与成本","token-and-cost"]]],
+ ["02","Prompt 提示词","基础","表达清楚任务，用背景、约束与示例获得更可靠的回答。",[["任务与角色","prompt-task-and-role"],["背景与约束","prompt-context-and-constraints"],["结构化输出","structured-output"]]],
+ ["03","模型 API 开发","动手实践","从第一次请求到流式对话，把模型能力接入你的应用。",[["第一次调用 API","hello-llm-api"],["流式输出","streaming-output"],["多轮对话状态","multi-turn-dialogue-state"]]],
+ ["04","RAG 知识库","应用核心","让模型依据你的资料回答，理解从检索到引用的完整过程。",[["文档切块","document-chunking"],["向量数据库","vector-database"],["召回与重排","retrieval-and-reranking"]]],
+ ["05","Agent 与工具","进阶","连接外部工具，组织任务执行，让 AI 完成多步骤工作。",[["Function Calling","function-calling"],["任务规划","agent-task-planning"],["失败恢复","agent-failure-recovery"]]],
+ ["06","评测与部署","走向产品","检验回答质量，管理成本与错误，把实验变成可靠应用。",[["建立评测集","evaluation-dataset"],["限流与缓存","rate-limit-and-cache"],["日志与监控","logging-and-monitoring"]]],
+] as [string,string,string,string,[string,string][]][];
+const lessonUrl = (slug:string) => url(`/posts/2026_07/${slug}/`);
+---
+<div class="learn-home">
+<section class="learn-intro"><div class="intro-copy"><span class="eyebrow">LLM, HELLO! / 中文学习指南</span><h1>学懂大模型，<br/>做出<span>你的 AI 应用。</span></h1><p>从第一个概念到第一个项目。循序渐进的中文教程、代码示例与实践工具，陪你把知识变成能力。</p><div class="intro-actions"><a class="primary-action" href={lessonUrl("llm-and-generative-ai")}>开始学习 ↗</a><a class="text-action" href={url("/map/")}>查看完整学习路线 →</a></div></div><aside class="first-project"><div class="project-top"><span class="eyebrow">你的第一个项目</span><span class="code-symbol" aria-hidden="true">&lt;/&gt;</span></div><h2>Hello, LLM.</h2><p>完成一次模型调用，<br/>让第一条回答出现在你的终端。</p><div class="project-steps"><span>01 配置环境</span><span>02 发起请求</span><span>03 读取回答</span></div><a href={url("/projects/hello-llm/")}>打开入门项目 <span aria-hidden="true">→</span></a></aside></section>
+<TutorialSearch items={items} client:load />
+<section id="courses" class="course-section"><div class="section-heading"><div><span class="eyebrow">一步一步，建立能力</span><h2>选择一个主题，开始探索</h2></div><a href={url("/map/")}>全部学习路线 ↗</a></div><div class="course-grid">{courses.map(([number,name,tag,description,lessons]) => <article class="course-card"><div class="course-top"><span class="course-number">{number}</span><span class="course-tag">{tag}</span></div><h3>{name}</h3><p>{description}</p><ul>{lessons.map(([title,slug]) => <li><a href={lessonUrl(slug)}>{title}<span aria-hidden="true">↗</span></a></li>)}</ul></article>)}</div></section>
+<section class="practice-strip"><div><span class="eyebrow">理解之后，亲手试试</span><h2>让抽象的概念变得具体。</h2></div><div class="practice-links"><a href={url("/labs/")}>交互实验 <span>Token · RAG · Agent ↗</span></a><a href={url("/prompts/")}>Prompt 配方 <span>可复用的任务模板 ↗</span></a><a href={url("/projects/")}>实战案例 <span>从代码到完整项目 ↗</span></a></div></section>
+<section class="recent-section"><div class="section-heading"><div><span class="eyebrow">持续积累</span><h2>最近更新</h2></div><a href={url("/archive/")}>浏览全部文章 ↗</a></div><div class="recent-list">{latestPosts.map(post => <a href={getPostUrlBySlug(post.slug)}><span class="recent-category">{post.data.category}</span><h3>{post.data.title}</h3><time datetime={post.data.published.toISOString()}>{post.data.published.toLocaleDateString("zh-CN")}</time><span aria-hidden="true">↗</span></a>)}</div></section>
+<div class="more-resources"><span>更多资源</span><a href={url("/models/")}>模型排名</a><a href={url("/about/")}>关于本站</a><a href={url("/rss.xml")}>RSS 订阅 ↗</a></div>
+</div>

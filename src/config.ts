@@ -5,18 +5,17 @@ import type {
 	ProfileConfig,
 	SiteConfig,
 } from "./types/config";
-import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
-	title: "LLM, Hello!",
-	subtitle: "面向中文开发者的 LLM 学习与实战入口",
+	title: "LLMHello",
+	subtitle: "找到适合你任务的 AI 模型",
 	lang: "zh_CN", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
 	themeColor: {
 		hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
-		fixed: false, // Hide the theme color picker for visitors
+		fixed: true, // Hide the theme color picker for visitors
 	},
 	banner: {
-		enable: true,
+		enable: false,
 		src: "assets/images/banner.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
@@ -41,30 +40,12 @@ export const siteConfig: SiteConfig = {
 
 export const navBarConfig: NavBarConfig = {
 	links: [
-		LinkPreset.Home,
-		{
-			name: "实验室",
-			url: "/labs/",
-		},
-		{
-			name: "学习地图",
-			url: "/map/",
-		},
-		{
-			name: "模型排名",
-			url: "/models/",
-		},
-		{
-			name: "Prompt",
-			url: "/prompts/",
-		},
-		{
-			name: "实战案例",
-			url: "/projects/",
-		},
-		LinkPreset.Archive,
-		LinkPreset.About,
-	],
+        { name: "模型榜单", url: "/rankings/" },
+        { name: "模型对比", url: "/compare/" },
+        { name: "选型助手", url: "/finder/" },
+        { name: "费用计算", url: "/pricing/" },
+        { name: "教程", url: "/learn/" },
+    ],
 };
 
 export const profileConfig: ProfileConfig = {

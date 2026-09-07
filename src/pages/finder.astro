@@ -1,0 +1,6 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import PageIntro from "@components/discovery/PageIntro.astro";
+import ModelFinder from "@components/discovery/ModelFinder.svelte";
+---
+<MainGridLayout title="AI 模型选型助手" description="根据任务场景、上下文长度和预算筛选模型，并计算候选方案的 Token 费用。"><div class="discovery-page"><PageIntro eyebrow="MODEL FINDER" title="从你的任务，找到合适的模型。" description="描述需求，调整规模与预算，得到一份有理由、可对比的候选清单。"/><ModelFinder client:load /></div></MainGridLayout>

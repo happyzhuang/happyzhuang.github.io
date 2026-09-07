@@ -19,7 +19,7 @@ const len = page.data.length;
 ---
 
 {page.currentPage === 1 ? (
-    <MainGridLayout hideSidebar title="首页">
+    <MainGridLayout title="AI 模型发现、对比与选型" description="比较模型能力、官方 API 价格与上下文规格。使用选型助手和费用计算器，找到适合你任务的 AI 模型。">
         <HomePage latestPosts={page.data.slice(0, 3)} />
     </MainGridLayout>
 ) : (

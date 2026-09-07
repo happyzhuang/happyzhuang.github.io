@@ -1,0 +1,6 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import PageIntro from "@components/discovery/PageIntro.astro";
+import ModelExplorer from "@components/discovery/ModelExplorer.svelte";
+---
+<MainGridLayout title="AI 模型榜单与成本排序" description="按任务筛选模型，对比官方 API 单价与上下文规格，查看独立评测来源。"><div class="discovery-page"><PageIntro eyebrow="MODEL RANKINGS" title="选一个维度，看清模型差异。" description="首版以可核验的成本与规格排序。场景标签用于筛选，不将不同评测的分数混成一个总榜。"/><ModelExplorer client:load /><div class="method-banner"><div><h2>想比较实际能力？</h2><p>人类偏好、代码任务和 Agent 执行衡量的是不同问题。</p></div><a href="/benchmarks/">查看独立评测来源 ↗</a></div></div></MainGridLayout>

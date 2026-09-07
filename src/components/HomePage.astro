@@ -1,184 +1,22 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { Image } from "astro:assets";
-import { Icon } from "astro-icon/components";
-import { getPostUrlBySlug, url } from "@utils/url-utils";
-import labCardImage from "@assets/images/home-card-lab.png";
-import mapCardImage from "@assets/images/home-card-map.png";
-import promptCardImage from "@assets/images/home-card-prompt.png";
-import projectsCardImage from "@assets/images/home-card-projects.png";
-import heroImage from "@assets/images/home-hero-apple-style.png";
-
-interface Props {
-	latestPosts: CollectionEntry<"posts">[];
-}
-
+import { getPostUrlBySlug } from "@utils/url-utils";
+import ModelExplorer from "./discovery/ModelExplorer.svelte";
+import { models, checkedAt, money } from "../data/models";
+interface Props { latestPosts: CollectionEntry<"posts">[]; }
 const { latestPosts } = Astro.props;
-
-const entries = [
-	{
-		title: "学习地图",
-		description: "把 LLM 基础、Prompt、RAG、Agent 和部署实践组织成一条路线。",
-		href: "/map/",
-		icon: "material-symbols:map-outline-rounded",
-		image: mapCardImage,
-	},
-	{
-		title: "模型排名",
-		description: "按场景整理主流模型、API 能力、接入方式和中文开发注意事项。",
-		href: "/models/",
-		icon: "material-symbols:hub-outline",
-		image: mapCardImage,
-	},
-	{
-		title: "实验室",
-		description: "用可交互工具观察 token、流程、提示词和模型行为。",
-		href: "/labs/",
-		icon: "material-symbols:labs-outline-rounded",
-		image: labCardImage,
-	},
-	{
-		title: "Prompt 配方",
-		description: "沉淀可复用模板、输入格式、输出样例和失败案例。",
-		href: "/prompts/",
-		icon: "material-symbols:terminal-rounded",
-		image: promptCardImage,
-	},
-	{
-		title: "实战案例",
-		description: "沉淀 RAG、Agent、模型调用和部署上线的可复现项目样板。",
-		href: "/projects/",
-		icon: "material-symbols:edit-note-rounded",
-		image: projectsCardImage,
-	},
+const pairs = [
+ {name:"GPT × Claude",detail:"复杂任务，如何权衡成本？",ids:["gpt-6-astra","claude-sonnet-5"],marks:["O","A"],href:"/compare/gpt-vs-claude/"},
+ {name:"Gemini × DeepSeek",detail:"多模态输入，还是文本调用？",ids:["gemini-3-8-flash","deepseek-v4-flash"],marks:["G","D"],href:"/compare/gemini-vs-deepseek/"},
+ {name:"Sonnet × Haiku",detail:"同一厂商，不同预算。",ids:["claude-sonnet-5","claude-haiku-4-5"],marks:["A","A"],href:"/compare/sonnet-vs-haiku/"},
 ];
-
-const experiments = [
-	["Token 成本估算器", "已上线", "估算输入、输出和调用成本。"],
-	["Prompt 对比器", "已上线", "比较不同提示词结构的效果。"],
-	["RAG 流程演示", "已上线", "拆解切块、召回、重排和生成。"],
-	["Agent 工作流", "已上线", "展示规划、工具调用和反思修正。"],
-];
-
-const path = ["理解 LLM", "选择模型", "写好 Prompt", "构建 RAG", "设计 Agent", "部署应用"];
+const budgetModels = [...models].sort((a,b)=>a.input*10+a.output*2-b.input*10-b.output*2).slice(0,3);
 ---
-
-<div class="space-y-4">
-	<section class="relative overflow-hidden rounded-[var(--radius-large)] bg-[var(--card-bg)] min-h-[23rem] md:min-h-[26rem] px-6 py-8 md:px-10 md:py-9 onload-animation">
-		<Image
-			src={heroImage}
-			alt="极简桌面、银色电脑和柔和学习面板组成的首页主视觉"
-			class="absolute inset-0 h-full w-full object-cover object-[center_50%]"
-			loading="eager"
-		/>
-		<div class="absolute inset-0 bg-gradient-to-r from-white via-white/75 to-white/5 dark:from-[oklch(0.18_0.014_var(--hue))] dark:via-[oklch(0.18_0.014_var(--hue))]/78 dark:to-black/5"></div>
-		<div class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[var(--card-bg)] to-transparent"></div>
-
-		<div class="relative flex min-h-[18.5rem] md:min-h-[21rem] flex-col justify-between max-w-3xl">
-			<div>
-				<h1 class="text-4xl md:text-5xl font-bold text-90 leading-tight mb-4">LLM, Hello!</h1>
-				<p class="text-lg md:text-xl text-75 leading-8 mb-6">
-					面向中文开发者的 LLM 学习与实战入口。这里把学习路线、模型排名、实验工具、Prompt 配方和可复现案例放在同一个入口里。
-				</p>
-				<div class="flex flex-col sm:flex-row gap-3">
-					<a href={url("/map/")} class="btn-regular rounded-xl h-12 px-5 font-bold justify-start sm:justify-center">
-						<Icon name="material-symbols:map-outline-rounded" class="text-2xl mr-2" />
-						查看学习地图
-					</a>
-					<a href={url("/models/")} class="btn-plain rounded-xl h-12 px-5 font-bold justify-start sm:justify-center bg-white/55 dark:bg-black/20">
-						<Icon name="material-symbols:hub-outline" class="text-2xl mr-2" />
-						浏览模型排名
-					</a>
-				</div>
-			</div>
-
-			<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-7 max-w-2xl">
-				{["Model API", "Prompt", "RAG", "Agent"].map((item) => (
-					<div class="rounded-xl bg-white/65 dark:bg-black/25 backdrop-blur px-3 py-3 border border-white/40 dark:border-white/10">
-						<div class="text-xs text-50 mb-1">正在探索</div>
-						<div class="font-bold text-90">{item}</div>
-					</div>
-				))}
-			</div>
-		</div>
-	</section>
-
-	<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
-		{entries.map((entry) => (
-			<a href={url(entry.href)} class="group card-base onload-animation hover:bg-[var(--btn-card-bg-hover)] active:bg-[var(--btn-card-bg-active)]">
-				<div class="relative aspect-[16/10] overflow-hidden">
-					<Image
-						src={entry.image}
-						alt={`${entry.title}视觉图`}
-						class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-						loading="lazy"
-					/>
-					<div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent"></div>
-					<div class="absolute bottom-3 left-3 w-10 h-10 rounded-xl bg-white/80 dark:bg-black/45 backdrop-blur flex items-center justify-center text-[var(--primary)]">
-						<Icon name={entry.icon} class="text-2xl" />
-					</div>
-				</div>
-				<div class="px-5 py-5">
-					<h2 class="text-xl font-bold text-90 mb-2 flex items-center">
-						{entry.title}
-						<Icon name="material-symbols:chevron-right-rounded" class="text-[var(--primary)] text-2xl transition group-hover:translate-x-1" />
-					</h2>
-					<p class="text-75 leading-7">{entry.description}</p>
-				</div>
-			</a>
-		))}
-	</section>
-
-	<section class="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-4">
-		<div class="card-base px-6 py-7 md:px-8 onload-animation">
-			<h2 class="text-2xl font-bold text-90 mb-5">正在构建</h2>
-			<div class="space-y-3">
-				{experiments.map(([title, status, description]) => (
-					<div class="rounded-2xl bg-[var(--btn-regular-bg)] px-4 py-4">
-						<div class="flex items-center justify-between gap-3 mb-1">
-							<div class="font-bold text-90">{title}</div>
-							<div class="text-xs rounded-lg px-2.5 py-1 bg-[var(--card-bg)] text-[var(--btn-content)]">{status}</div>
-						</div>
-						<p class="text-sm text-75 leading-6">{description}</p>
-					</div>
-				))}
-			</div>
-		</div>
-
-		<div class="card-base px-6 py-7 md:px-8 onload-animation">
-			<h2 class="text-2xl font-bold text-90 mb-5">推荐学习路径</h2>
-			<div class="space-y-4">
-				{path.map((item, index) => (
-					<div class="flex gap-4">
-						<div class="shrink-0 w-10 h-10 rounded-xl bg-[var(--btn-regular-bg)] text-[var(--primary)] flex items-center justify-center font-bold">
-							{index + 1}
-						</div>
-						<div class="pt-1">
-							<div class="font-bold text-90">{item}</div>
-							<div class="text-sm text-50 mt-1">从概念理解走向可运行的工程实践。</div>
-						</div>
-					</div>
-				))}
-			</div>
-		</div>
-	</section>
-
-	<section class="card-base px-6 py-7 md:px-8 onload-animation">
-		<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
-			<h2 class="text-2xl font-bold text-90">最新更新</h2>
-			<a href={url("/archive/")} class="btn-plain rounded-xl h-10 px-4 font-bold justify-start sm:justify-center">
-				查看全部文章
-				<Icon name="material-symbols:chevron-right-rounded" class="text-2xl ml-1" />
-			</a>
-		</div>
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-			{latestPosts.map((post) => (
-				<a href={getPostUrlBySlug(post.slug)} class="rounded-2xl bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)] active:bg-[var(--btn-regular-bg-active)] transition px-5 py-5">
-					<div class="text-xs text-50 mb-3">{post.data.published.toLocaleDateString("zh-CN")}</div>
-					<h3 class="font-bold text-lg text-90 leading-7 mb-2">{post.data.title}</h3>
-					<p class="text-sm text-75 leading-6 line-clamp-3">{post.data.description}</p>
-				</a>
-			))}
-		</div>
-	</section>
+<div class="discovery-page discovery-home">
+ <section class="discovery-hero"><div class="hero-platform-copy"><span class="platform-kicker"><span></span> THE RIGHT MODEL. FOR YOUR NEXT IDEA.</span><h1>Hello, LLM.<br/><span>找到适合你任务的 AI。</span></h1><p>模型越多，选择越需要依据。比较能力、价格与使用条件，<br class="desktop-break"/>让下一次调用，从一个清楚的选择开始。</p><form class="finder-launch" action="/finder/" method="get"><label class="sr-only" for="home-task">你希望 AI 完成的任务</label><span aria-hidden="true">✳</span><input id="home-task" name="q" maxlength="1000" placeholder="你希望 AI 做什么？例如，分析 100 份 PDF" required/><button type="submit">帮我选模型 <span aria-hidden="true">→</span></button></form><div class="hero-suggestions"><span>试试看</span><a href="/finder/?q=帮我编写代码">写代码 ↗</a><a href="/finder/?q=分析PDF文档">分析文档 ↗</a><a href="/finder/?q=构建Agent工具调用">构建 Agent ↗</a></div></div><aside class="hero-cost-preview"><div class="preview-heading"><span>一次选择，算清差异。</span><a href="/pricing/" aria-label="打开费用计算器">↗</a></div><span class="preview-label">10M 输入 + 2M 输出 Token</span><div class="preview-cost-list">{budgetModels.map(m=><div><span class={`provider-mark ${m.tone}`}>{m.mark}</span><span>{m.name}</span><strong>{money(m.input*10+m.output*2)}</strong></div>)}</div><p>未缓存 / Standard；DeepSeek 按高峰价。<br/>Token 费用示例，不代表质量排名。</p><a class="preview-link" href="/pricing/">换成我的调用规模 →</a></aside></section>
+ <div class="platform-trustbar"><div><strong>{models.length}</strong><span>已收录模型</span></div><div><strong>{new Set(models.map(m=>m.provider)).size}</strong><span>模型厂商</span></div><div><span class="status-dot"></span><span>官方资料核验 · {checkedAt}</span></div><a href="/benchmarks/">公开来源与比较方法 ↗</a></div>
+ <div class="discovery-workspace"><section class="home-models"><div class="section-heading"><div><span class="eyebrow">EXPLORE MODELS</span><h2>从任务出发，缩小选择范围。</h2></div><a href="/rankings/">查看榜单 ↗</a></div><ModelExplorer compact client:load /></section><aside class="discovery-rail"><section class="rail-card"><span class="eyebrow">SIDE BY SIDE</span><h2>从一组对比开始</h2>{pairs.map(p=><a class="pair-card" href={p.href}><span class="pair-marks"><b>{p.marks[0]}</b><i>vs</i><b>{p.marks[1]}</b></span><strong>{p.name} <span>↗</span></strong><small>{p.detail}</small></a>)}</section><a class="rail-finder" href="/finder/"><span class="eyebrow">MODEL FINDER</span><h3>还不知道<br/>该选哪一个？</h3><p>告诉我们任务与预算，<br/>先拿到一份候选清单。</p><strong>开始选型 →</strong></a><a class="rail-method" href="/benchmarks/"><span>数据透明，选择有据。</span><p>查看每项数据的来源、适用条件和核验时间。</p><strong>了解数据口径 ↗</strong></a></aside></div>
+ <section class="platform-next"><a href="/pricing/"><span>01 / ESTIMATE</span><h3>每月会花多少钱？ ↗</h3><p>调整 Token、请求数和缓存比例，比较不同模型的月度成本。</p></a><a href="/benchmarks/"><span>02 / EVALUATE</span><h3>怎么看懂评测？ ↗</h3><p>分清质量、速度与成本，找到适合任务的评测依据。</p></a><a href="/learn/"><span>03 / BUILD</span><h3>选好模型，开始构建。 ↗</h3><p>从第一次 API 调用到 RAG 与 Agent，跟随中文教程动手实践。</p></a></section>
+ <section class="platform-reading"><div class="section-heading"><div><span class="eyebrow">LEARN & BUILD</span><h2>把选择，变成实践。</h2></div><a href="/archive/">全部文章 ↗</a></div><div class="platform-articles">{latestPosts.map(p=><a href={getPostUrlBySlug(p.slug)}><span>{p.data.category}</span><h3>{p.data.title}</h3><p>{p.data.description}</p><small>阅读文章 →</small></a>)}</div></section>
+ <nav class="platform-resources" aria-label="更多资源"><span>LLMHello</span><a href="/models/">模型资料库</a><a href="/learn/">中文教程</a><a href="/map/">学习路线</a><a href="/prompts/">Prompt 配方</a><a href="/labs/">实验室</a><a href="/about/">关于</a><a href="/rss.xml">RSS ↗</a></nav>
 </div>

@@ -1,0 +1,7 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import LearningHome from "@components/LearningHome.astro";
+import { getSortedPosts } from "@utils/content-utils";
+const posts=await getSortedPosts();
+---
+<MainGridLayout title="LLM 中文教程与实践"><LearningHome latestPosts={posts.slice(0,3)} /></MainGridLayout>

@@ -1,0 +1,9 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import PageIntro from "@components/discovery/PageIntro.astro";
+import ModelExplorer from "@components/discovery/ModelExplorer.svelte";
+import { scenarios } from "../../data/models";
+export function getStaticPaths() { return scenarios.map(s => ({params:{category:s.id === "all" ? "overall" : s.id},props:{scenario:s}})); }
+const {scenario} = Astro.props;
+---
+<MainGridLayout title={`${scenario.label}模型：价格与规格比较`}><div class="discovery-page"><PageIntro eyebrow={`${scenario.en.toUpperCase()} / MODEL RANKINGS`} title={`${scenario.label}，从候选模型开始。`} description="按公开能力筛选，以参考 Token 成本排序。任务标签是选型提示，不代表独立质量排名。"/><ModelExplorer initialScenario={scenario.id} client:load /></div></MainGridLayout>

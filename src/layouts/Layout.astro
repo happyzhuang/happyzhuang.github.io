@@ -19,6 +19,8 @@ import { defaultFavicons } from "../constants/icon";
 import type { Favicon } from "../types/config";
 import { pathsEqual, url } from "../utils/url-utils";
 import "katex/dist/katex.css";
+import "../styles/learning.css";
+import "../styles/discovery.css";
 
 interface Props {
 	title?: string;
@@ -76,7 +78,7 @@ const canonicalUrl = canonical || Astro.url.href;
 ---
 
 <!DOCTYPE html>
-<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]"
+<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[16px]"
 	  data-overlayscrollbars-initialize
 >
 	<head>
@@ -280,7 +282,7 @@ function setClickOutsideToClose(panel: string, ignores: string[]) {
 }
 setClickOutsideToClose("display-setting", ["display-setting", "display-settings-switch"])
 setClickOutsideToClose("nav-menu-panel", ["nav-menu-panel", "nav-menu-switch"])
-setClickOutsideToClose("search-panel", ["search-panel", "search-bar", "search-switch"])
+
 
 
 function loadTheme() {

@@ -1,0 +1,6 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import PageIntro from "@components/discovery/PageIntro.astro";
+import CostCalculator from "@components/discovery/CostCalculator.svelte";
+---
+<MainGridLayout title="AI API 费用计算器" description="按输入输出 Token、请求量和缓存比例，计算 GPT、Claude、Gemini、DeepSeek 的月度 API 成本。"><div class="discovery-page"><PageIntro eyebrow="API COST CALCULATOR" title="先算清楚，再开始调用。" description="同一组调用规模，并排计算不同模型的 Token 费用。所有价格均附官方来源。"/><CostCalculator client:load /></div></MainGridLayout>

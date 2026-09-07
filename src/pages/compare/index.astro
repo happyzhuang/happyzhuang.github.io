@@ -1,0 +1,6 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import PageIntro from "@components/discovery/PageIntro.astro";
+import ModelCompare from "@components/discovery/ModelCompare.svelte";
+---
+<MainGridLayout title="AI 模型对比" description="并排比较 GPT、Claude、Gemini 和 DeepSeek 的模型规格、API 价格与适用场景。"><div class="discovery-page"><PageIntro eyebrow="MODEL COMPARE" title="选择之前，放在一起看。" description="具体版本、价格条件和能力边界，逐项对比。支持分享你的对比组合。"/><ModelCompare client:load /></div></MainGridLayout>

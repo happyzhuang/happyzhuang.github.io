@@ -1,0 +1,14 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import PageIntro from "@components/discovery/PageIntro.astro";
+import ModelCompare from "@components/discovery/ModelCompare.svelte";
+export function getStaticPaths() {
+  return [
+    {pair:"gpt-vs-claude",title:"GPT-6 Astra vs Claude Sonnet 5",ids:["gpt-6-astra","claude-sonnet-5"]},
+    {pair:"gemini-vs-deepseek",title:"Gemini 3.8 Flash vs DeepSeek V4 Flash",ids:["gemini-3-8-flash","deepseek-v4-flash"]},
+    {pair:"sonnet-vs-haiku",title:"Claude Sonnet 5 vs Haiku 4.5",ids:["claude-sonnet-5","claude-haiku-4-5"]},
+  ].map(pair => ({params:{pair:pair.pair},props:{pair}}));
+}
+const {pair} = Astro.props;
+---
+<MainGridLayout title={pair.title} description={`${pair.title} 的官方 API 价格、上下文与接口能力对比。`}><div class="discovery-page"><PageIntro eyebrow="MODEL COMPARE" title={pair.title} description="这里比较的是下列具体版本。价格、规格、能力与限制分别列出，帮助你选择下一步要实测的模型。"/><ModelCompare initialIds={pair.ids} client:load /></div></MainGridLayout>
